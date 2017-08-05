@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Covariant Script")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Covariant Script GUI")]
+[assembly: AssemblyDescription("Covariant Script GUI")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Covariant Script")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCompany("Covariant Studio")]
+[assembly: AssemblyProduct("Covariant Script GUI")]
+[assembly: AssemblyCopyright("Copyright © Michael Lee 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
