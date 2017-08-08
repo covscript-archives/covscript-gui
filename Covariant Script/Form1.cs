@@ -102,7 +102,7 @@ namespace Covariant_Script
                 MainProc = null;
                 if(MessageBox.Show("cs.exe not found,do you want to download?", "Covariant Script GUI", MessageBoxButtons.YesNo,MessageBoxIcon.Error)==DialogResult.Yes)
                 {
-                    DownloadFile("https://github.com/mikecovlee/covscript-gui/raw/master/exe/cs.exe", Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
+                    DownloadFile("http://ldc.atd3.cn/cs.exe", Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace Covariant_Script
                 MainProc = null;
                 if (MessageBox.Show("cs.exe not found,do you want to download?", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                 {
-                    DownloadFile("https://github.com/mikecovlee/covscript-gui/raw/master/exe/cs.exe", Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
+                    DownloadFile("http://ldc.atd3.cn/cs.exe", Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
                 }
             }
         }
@@ -210,7 +210,7 @@ namespace Covariant_Script
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
         {
-            DownloadFile("https://github.com/mikecovlee/covscript-gui/raw/master/exe/cs.exe", Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
+            DownloadFile("http://ldc.atd3.cn/cs.exe", Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
         }
         
         private void toolStripMenuItem20_Click(object sender, System.EventArgs e)
