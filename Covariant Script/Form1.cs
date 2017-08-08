@@ -8,6 +8,8 @@ namespace Covariant_Script
 {
     public partial class Form1 : Form
     {
+        private string FileUrl = "http://ldc.atd3.cn/cs.exe";
+        private string TempPath = "C:\\Temp\\CovScriptGUI";
         private string FilePath = "";
         private bool FileChanged = false;
         private Process MainProc = null;
@@ -15,6 +17,7 @@ namespace Covariant_Script
         public Form1()
         {
             InitializeComponent();
+            Directory.CreateDirectory(TempPath);
         }
 
         public void DownloadFile(string URL, string filename, System.Windows.Forms.ToolStripProgressBar prog, System.Windows.Forms.ToolStripLabel label)
@@ -93,16 +96,16 @@ namespace Covariant_Script
 
         private void Run()
         {
-            richTextBox1.SaveFile(Application.StartupPath + "/temp.csc", RichTextBoxStreamType.PlainText);
+            richTextBox1.SaveFile(TempPath + "\\temp.csc", RichTextBoxStreamType.PlainText);
             try
             {
-                MainProc = Process.Start(Application.StartupPath + "/cs.exe","temp.csc");
+                MainProc = Process.Start(Application.StartupPath + "\\cs.exe", TempPath + "\\temp.csc");
             }catch(System.ComponentModel.Win32Exception)
             {
                 MainProc = null;
                 if(MessageBox.Show("cs.exe not found,do you want to download?", "Covariant Script GUI", MessageBoxButtons.YesNo,MessageBoxIcon.Error)==DialogResult.Yes)
                 {
-                    DownloadFile("http://ldc.atd3.cn/cs.exe", Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
+                    DownloadFile(FileUrl, Application.StartupPath + "\\cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
                 }
             }
         }
@@ -110,17 +113,17 @@ namespace Covariant_Script
         public void Run(string args)
         {
             LastArgs = args;
-            richTextBox1.SaveFile(Application.StartupPath + "/temp.csc", RichTextBoxStreamType.PlainText);
+            richTextBox1.SaveFile(TempPath + "\\temp.csc", RichTextBoxStreamType.PlainText);
             try
             {
-                MainProc = Process.Start(Application.StartupPath + "/cs.exe", "temp.csc " + args);
+                MainProc = Process.Start(Application.StartupPath + "\\cs.exe", TempPath + "\\temp.csc " + args);
             }
             catch (System.ComponentModel.Win32Exception)
             {
                 MainProc = null;
                 if (MessageBox.Show("cs.exe not found,do you want to download?", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                 {
-                    DownloadFile("http://ldc.atd3.cn/cs.exe", Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
+                    DownloadFile(FileUrl, Application.StartupPath + "\\cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
                 }
             }
         }
@@ -210,7 +213,7 @@ namespace Covariant_Script
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
         {
-            DownloadFile("http://ldc.atd3.cn/cs.exe", Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
+            DownloadFile(FileUrl, Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
         }
         
         private void toolStripMenuItem20_Click(object sender, System.EventArgs e)
@@ -306,8 +309,8 @@ namespace Covariant_Script
                     MainProc.Kill();
                     MainProc.WaitForExit();
                 }
-                File.Delete(Application.StartupPath + "/temp.csc");
             }
+            Directory.Delete(TempPath, true);
         }
 
         private void richTextBox1_TextChanged(object sender, System.EventArgs e)
