@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Windows.Forms;
 
 namespace Covariant_Script
@@ -45,7 +44,7 @@ namespace Covariant_Script
                     osize = st.Read(by, 0, (int)by.Length);
 
                     percent = (double)totalDownloadedByte / (double)totalBytes * 100;
-                    label.Text = "Downloading cs.exe " + ((int)percent).ToString() + "%";
+                    label.Text = "下载中 " + ((int)percent).ToString() + "%";
                     System.Windows.Forms.Application.DoEvents();
                 }
                 so.Close();
@@ -53,10 +52,14 @@ namespace Covariant_Script
             }
             catch (System.Exception)
             {
-                MessageBox.Show("Download failed", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("下载失败", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                label.Text = "错误";
+                if (prog != null)
+                    prog.Value = 0;
+                return;
             }
-            MessageBox.Show("Download finished", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            label.Text = "Ready";
+            MessageBox.Show("下载完成", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            label.Text = "就绪";
             if (prog != null)
                 prog.Value = 0;
         }
@@ -81,7 +84,7 @@ namespace Covariant_Script
         {
             if (FileChanged)
             {
-                if (MessageBox.Show("File has unsaved changes,do you wang to save them?", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("文件已修改，是否保存？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     if (FilePath == "")
                     {
@@ -103,7 +106,7 @@ namespace Covariant_Script
             }catch(System.ComponentModel.Win32Exception)
             {
                 MainProc = null;
-                if(MessageBox.Show("cs.exe not found,do you want to download?", "Covariant Script GUI", MessageBoxButtons.YesNo,MessageBoxIcon.Error)==DialogResult.Yes)
+                if(MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo,MessageBoxIcon.Error)==DialogResult.Yes)
                 {
                     DownloadFile(FileUrl, Application.StartupPath + "\\cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
                 }
@@ -121,7 +124,7 @@ namespace Covariant_Script
             catch (System.ComponentModel.Win32Exception)
             {
                 MainProc = null;
-                if (MessageBox.Show("cs.exe not found,do you want to download?", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                 {
                     DownloadFile(FileUrl, Application.StartupPath + "\\cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
                 }
@@ -198,7 +201,7 @@ namespace Covariant_Script
 
         private void toolStripMenuItem16_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Covariant Script GUI 1.0.0", "About", MessageBoxButtons.OK);
+            MessageBox.Show("Covariant Script GUI 1.0.1", "关于", MessageBoxButtons.OK);
         }
 
         private void toolStripMenuItem17_Click(object sender, System.EventArgs e)
@@ -316,7 +319,7 @@ namespace Covariant_Script
         private void richTextBox1_TextChanged(object sender, System.EventArgs e)
         {
             FileChanged = true;
-            Text = FilePath + "(Unsaved) - Covariant Script GUI";
+            Text = FilePath + "(未保存) - Covariant Script GUI";
         }
     }
 }

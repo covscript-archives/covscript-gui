@@ -46,7 +46,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 21);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Run";
+            this.button1.Text = "运行";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -65,7 +65,7 @@
             this.MinimizeBox = false;
             this.Name = "RunForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Run with args";
+            this.Text = "以参数运行";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RunForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();

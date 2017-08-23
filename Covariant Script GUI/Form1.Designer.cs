@@ -102,16 +102,16 @@
             this.toolStripSeparator2,
             this.toolStripMenuItem9});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(39, 21);
-            this.toolStripMenuItem1.Text = "File";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(44, 21);
+            this.toolStripMenuItem1.Text = "文件";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.ShortcutKeyDisplayString = "(Ctrl+N)";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(216, 22);
-            this.toolStripMenuItem5.Text = "New File";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(207, 22);
+            this.toolStripMenuItem5.Text = "新建";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripMenuItem6
@@ -119,22 +119,22 @@
             this.toolStripMenuItem6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
             this.toolStripMenuItem6.ShortcutKeyDisplayString = "(Ctrl+O)";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(216, 22);
-            this.toolStripMenuItem6.Text = "Open File...";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(207, 22);
+            this.toolStripMenuItem6.Text = "打开...";
             this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(204, 6);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
             this.toolStripMenuItem7.ShortcutKeyDisplayString = "(Ctrl+S)";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(216, 22);
-            this.toolStripMenuItem7.Text = "Save";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(207, 22);
+            this.toolStripMenuItem7.Text = "保存";
             this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
             // 
             // toolStripMenuItem8
@@ -142,21 +142,21 @@
             this.toolStripMenuItem8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
             this.toolStripMenuItem8.ShortcutKeyDisplayString = "(Ctrl+Shift+S)";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(216, 22);
-            this.toolStripMenuItem8.Text = "Save As...";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(207, 22);
+            this.toolStripMenuItem8.Text = "另存为...";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(204, 6);
             // 
             // toolStripMenuItem9
             // 
             this.toolStripMenuItem9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem9.Name = "toolStripMenuItem9";
-            this.toolStripMenuItem9.Size = new System.Drawing.Size(216, 22);
-            this.toolStripMenuItem9.Text = "Exit";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(207, 22);
+            this.toolStripMenuItem9.Text = "退出";
             this.toolStripMenuItem9.Click += new System.EventHandler(this.toolStripMenuItem9_Click);
             // 
             // toolStripMenuItem2
@@ -171,16 +171,16 @@
             this.toolStripMenuItem14,
             this.toolStripMenuItem15});
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(42, 21);
-            this.toolStripMenuItem2.Text = "Edit";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(44, 21);
+            this.toolStripMenuItem2.Text = "编辑";
             // 
             // toolStripMenuItem10
             // 
             this.toolStripMenuItem10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem10.Name = "toolStripMenuItem10";
             this.toolStripMenuItem10.ShortcutKeyDisplayString = "(Ctrl+Z)";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItem10.Text = "Undo";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItem10.Text = "撤销";
             this.toolStripMenuItem10.Click += new System.EventHandler(this.toolStripMenuItem10_Click);
             // 
             // toolStripMenuItem11
@@ -188,22 +188,22 @@
             this.toolStripMenuItem11.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem11.Name = "toolStripMenuItem11";
             this.toolStripMenuItem11.ShortcutKeyDisplayString = "(Ctrl+Y)";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItem11.Text = "Redo";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItem11.Text = "重做";
             this.toolStripMenuItem11.Click += new System.EventHandler(this.toolStripMenuItem11_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(178, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(150, 6);
             // 
             // toolStripMenuItem12
             // 
             this.toolStripMenuItem12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem12.Name = "toolStripMenuItem12";
             this.toolStripMenuItem12.ShortcutKeyDisplayString = "(Ctrl+X)";
-            this.toolStripMenuItem12.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItem12.Text = "Cut";
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItem12.Text = "剪切";
             this.toolStripMenuItem12.Click += new System.EventHandler(this.toolStripMenuItem12_Click);
             // 
             // toolStripMenuItem13
@@ -211,8 +211,8 @@
             this.toolStripMenuItem13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem13.Name = "toolStripMenuItem13";
             this.toolStripMenuItem13.ShortcutKeyDisplayString = "(Ctrl+C)";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItem13.Text = "Copy";
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItem13.Text = "复制";
             this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click);
             // 
             // toolStripMenuItem14
@@ -220,8 +220,8 @@
             this.toolStripMenuItem14.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem14.Name = "toolStripMenuItem14";
             this.toolStripMenuItem14.ShortcutKeyDisplayString = "(Ctrl+V)";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItem14.Text = "Paste";
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItem14.Text = "粘贴";
             this.toolStripMenuItem14.Click += new System.EventHandler(this.toolStripMenuItem14_Click);
             // 
             // toolStripMenuItem15
@@ -229,8 +229,8 @@
             this.toolStripMenuItem15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripMenuItem15.Name = "toolStripMenuItem15";
             this.toolStripMenuItem15.ShortcutKeyDisplayString = "(Ctrl+A)";
-            this.toolStripMenuItem15.Size = new System.Drawing.Size(181, 22);
-            this.toolStripMenuItem15.Text = "Select All";
+            this.toolStripMenuItem15.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItem15.Text = "全选";
             this.toolStripMenuItem15.Click += new System.EventHandler(this.toolStripMenuItem15_Click);
             // 
             // toolStripMenuItem3
@@ -242,34 +242,34 @@
             this.toolStripSeparator5,
             this.toolStripMenuItem19});
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(46, 21);
-            this.toolStripMenuItem3.Text = "Tool";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(44, 21);
+            this.toolStripMenuItem3.Text = "工具";
             // 
             // toolStripMenuItem17
             // 
             this.toolStripMenuItem17.Name = "toolStripMenuItem17";
             this.toolStripMenuItem17.ShortcutKeyDisplayString = "(Ctrl+R)";
-            this.toolStripMenuItem17.Size = new System.Drawing.Size(174, 22);
-            this.toolStripMenuItem17.Text = "Run";
+            this.toolStripMenuItem17.Size = new System.Drawing.Size(177, 22);
+            this.toolStripMenuItem17.Text = "运行";
             this.toolStripMenuItem17.Click += new System.EventHandler(this.toolStripMenuItem17_Click);
             // 
             // toolStripMenuItem18
             // 
             this.toolStripMenuItem18.Name = "toolStripMenuItem18";
-            this.toolStripMenuItem18.Size = new System.Drawing.Size(174, 22);
-            this.toolStripMenuItem18.Text = "Run with args...";
+            this.toolStripMenuItem18.Size = new System.Drawing.Size(177, 22);
+            this.toolStripMenuItem18.Text = "以参数运行...";
             this.toolStripMenuItem18.Click += new System.EventHandler(this.toolStripMenuItem18_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(174, 6);
             // 
             // toolStripMenuItem19
             // 
             this.toolStripMenuItem19.Name = "toolStripMenuItem19";
-            this.toolStripMenuItem19.Size = new System.Drawing.Size(174, 22);
-            this.toolStripMenuItem19.Text = "Download cs.exe";
+            this.toolStripMenuItem19.Size = new System.Drawing.Size(177, 22);
+            this.toolStripMenuItem19.Text = "下载/更新必要组件";
             this.toolStripMenuItem19.Click += new System.EventHandler(this.toolStripMenuItem19_Click);
             // 
             // toolStripMenuItem4
@@ -278,14 +278,14 @@
             this.toolStripMenuItem4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem16});
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(47, 21);
-            this.toolStripMenuItem4.Text = "Help";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(44, 21);
+            this.toolStripMenuItem4.Text = "帮助";
             // 
             // toolStripMenuItem16
             // 
             this.toolStripMenuItem16.Name = "toolStripMenuItem16";
-            this.toolStripMenuItem16.Size = new System.Drawing.Size(207, 22);
-            this.toolStripMenuItem16.Text = "About Covariant Script";
+            this.toolStripMenuItem16.Size = new System.Drawing.Size(218, 22);
+            this.toolStripMenuItem16.Text = "关于Covariant Script GUI";
             this.toolStripMenuItem16.Click += new System.EventHandler(this.toolStripMenuItem16_Click);
             // 
             // richTextBox1
@@ -322,72 +322,72 @@
             this.toolStripMenuItem26,
             this.toolStripMenuItem27});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(165, 192);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(146, 192);
             // 
             // toolStripMenuItem20
             // 
             this.toolStripMenuItem20.Name = "toolStripMenuItem20";
-            this.toolStripMenuItem20.Size = new System.Drawing.Size(164, 22);
-            this.toolStripMenuItem20.Text = "Undo";
+            this.toolStripMenuItem20.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuItem20.Text = "撤销";
             this.toolStripMenuItem20.Click += new System.EventHandler(this.toolStripMenuItem20_Click);
             // 
             // toolStripMenuItem21
             // 
             this.toolStripMenuItem21.Name = "toolStripMenuItem21";
-            this.toolStripMenuItem21.Size = new System.Drawing.Size(164, 22);
-            this.toolStripMenuItem21.Text = "Redo";
+            this.toolStripMenuItem21.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuItem21.Text = "重做";
             this.toolStripMenuItem21.Click += new System.EventHandler(this.toolStripMenuItem21_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(161, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(142, 6);
             // 
             // toolStripMenuItem22
             // 
             this.toolStripMenuItem22.Name = "toolStripMenuItem22";
-            this.toolStripMenuItem22.Size = new System.Drawing.Size(164, 22);
-            this.toolStripMenuItem22.Text = "Cut";
+            this.toolStripMenuItem22.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuItem22.Text = "剪切";
             this.toolStripMenuItem22.Click += new System.EventHandler(this.toolStripMenuItem22_Click);
             // 
             // toolStripMenuItem23
             // 
             this.toolStripMenuItem23.Name = "toolStripMenuItem23";
-            this.toolStripMenuItem23.Size = new System.Drawing.Size(164, 22);
-            this.toolStripMenuItem23.Text = "Copy";
+            this.toolStripMenuItem23.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuItem23.Text = "复制";
             this.toolStripMenuItem23.Click += new System.EventHandler(this.toolStripMenuItem23_Click);
             // 
             // toolStripMenuItem24
             // 
             this.toolStripMenuItem24.Name = "toolStripMenuItem24";
-            this.toolStripMenuItem24.Size = new System.Drawing.Size(164, 22);
-            this.toolStripMenuItem24.Text = "Paste";
+            this.toolStripMenuItem24.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuItem24.Text = "粘贴";
             this.toolStripMenuItem24.Click += new System.EventHandler(this.toolStripMenuItem24_Click);
             // 
             // toolStripMenuItem25
             // 
             this.toolStripMenuItem25.Name = "toolStripMenuItem25";
-            this.toolStripMenuItem25.Size = new System.Drawing.Size(164, 22);
-            this.toolStripMenuItem25.Text = "Select All";
+            this.toolStripMenuItem25.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuItem25.Text = "全选";
             this.toolStripMenuItem25.Click += new System.EventHandler(this.toolStripMenuItem25_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(161, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(142, 6);
             // 
             // toolStripMenuItem26
             // 
             this.toolStripMenuItem26.Name = "toolStripMenuItem26";
-            this.toolStripMenuItem26.Size = new System.Drawing.Size(164, 22);
-            this.toolStripMenuItem26.Text = "Run";
+            this.toolStripMenuItem26.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuItem26.Text = "运行";
             this.toolStripMenuItem26.Click += new System.EventHandler(this.toolStripMenuItem26_Click);
             // 
             // toolStripMenuItem27
             // 
             this.toolStripMenuItem27.Name = "toolStripMenuItem27";
-            this.toolStripMenuItem27.Size = new System.Drawing.Size(164, 22);
-            this.toolStripMenuItem27.Text = "Run with args...";
+            this.toolStripMenuItem27.Size = new System.Drawing.Size(145, 22);
+            this.toolStripMenuItem27.Text = "以参数运行...";
             this.toolStripMenuItem27.Click += new System.EventHandler(this.toolStripMenuItem27_Click);
             // 
             // openFileDialog1
@@ -414,8 +414,8 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
-            this.toolStripStatusLabel1.Text = "Ready";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(32, 17);
+            this.toolStripStatusLabel1.Text = "就绪";
             // 
             // toolStripProgressBar1
             // 
