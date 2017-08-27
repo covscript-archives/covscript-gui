@@ -1,4 +1,4 @@
-﻿namespace Covariant_Script
+﻿namespace Covariant_Script_GUI
 {
     partial class RunForm
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Covariant_Script
+namespace Covariant_Script_GUI
 {
     public partial class RunForm : Form
     {

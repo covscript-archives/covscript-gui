@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Covariant_Script;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Covariant_Script
+namespace Covariant_Script_GUI
 {
     public partial class Form1 : Form
     {
@@ -66,7 +67,7 @@ namespace Covariant_Script
 
         private void OpenFile(string path)
         {
-            richTextBox1.LoadFile(path, RichTextBoxStreamType.PlainText);
+            textBox1.Text = File.ReadAllText(path);
             FilePath = path;
             FileChanged = false;
             Text = path + " - Covariant Script GUI";
@@ -74,7 +75,7 @@ namespace Covariant_Script
 
         private void SaveFile(string path)
         {
-            richTextBox1.SaveFile(path, RichTextBoxStreamType.PlainText);
+            File.WriteAllText(path, textBox1.Text);
             FilePath = path;
             FileChanged = false;
             Text = path + " - Covariant Script GUI";
@@ -99,7 +100,7 @@ namespace Covariant_Script
 
         private void Run()
         {
-            richTextBox1.SaveFile(TempPath + "\\temp.csc", RichTextBoxStreamType.PlainText);
+            File.WriteAllText(TempPath + "\\temp.csc",textBox1.Text);
             try
             {
                 MainProc = Process.Start(Application.StartupPath + "\\cs.exe", TempPath + "\\temp.csc");
@@ -116,7 +117,7 @@ namespace Covariant_Script
         public void Run(string args)
         {
             LastArgs = args;
-            richTextBox1.SaveFile(TempPath + "\\temp.csc", RichTextBoxStreamType.PlainText);
+            File.WriteAllText(TempPath + "\\temp.csc", textBox1.Text);
             try
             {
                 MainProc = Process.Start(Application.StartupPath + "\\cs.exe", TempPath + "\\temp.csc " + args);
@@ -134,7 +135,7 @@ namespace Covariant_Script
         private void toolStripMenuItem5_Click(object sender, System.EventArgs e)
         {
             CheckUnsave();
-            richTextBox1.Clear();
+            textBox1.Clear();
             FilePath = "";
             FileChanged = false;
             Text = "Covariant Script GUI";
@@ -171,37 +172,32 @@ namespace Covariant_Script
 
         private void toolStripMenuItem10_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.Undo();
-        }
-
-        private void toolStripMenuItem11_Click(object sender, System.EventArgs e)
-        {
-            richTextBox1.Redo();
+            textBox1.Undo();
         }
 
         private void toolStripMenuItem12_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.Cut();
+            textBox1.Cut();
         }
 
         private void toolStripMenuItem13_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.Copy();
+            textBox1.Copy();
         }
 
         private void toolStripMenuItem14_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.Paste();
+            textBox1.Paste();
         }
 
         private void toolStripMenuItem15_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.SelectAll();
+            textBox1.SelectAll();
         }
 
         private void toolStripMenuItem16_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Covariant Script GUI 1.0.1", "关于", MessageBoxButtons.OK);
+            new InfoForm().Show();
         }
 
         private void toolStripMenuItem17_Click(object sender, System.EventArgs e)
@@ -221,32 +217,27 @@ namespace Covariant_Script
         
         private void toolStripMenuItem20_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.Undo();
-        }
-
-        private void toolStripMenuItem21_Click(object sender, System.EventArgs e)
-        {
-            richTextBox1.Redo();
+            textBox1.Undo();
         }
 
         private void toolStripMenuItem22_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.Cut();
+            textBox1.Cut();
         }
 
         private void toolStripMenuItem23_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.Copy();
+            textBox1.Copy();
         }
 
         private void toolStripMenuItem24_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.Paste();
+            textBox1.Paste();
         }
 
         private void toolStripMenuItem25_Click(object sender, System.EventArgs e)
         {
-            richTextBox1.SelectAll();
+            textBox1.SelectAll();
         }
 
         private void toolStripMenuItem26_Click(object sender, System.EventArgs e)
@@ -295,6 +286,13 @@ namespace Covariant_Script
                         e.Handled = true;
                     }
                     break;
+                case Keys.A:
+                    if (e.Modifiers == Keys.Control)
+                    {
+                        toolStripMenuItem25_Click(this, EventArgs.Empty);
+                        e.Handled = true;
+                    }
+                    break;
             }
         }
 
@@ -316,7 +314,7 @@ namespace Covariant_Script
             Directory.Delete(TempPath, true);
         }
 
-        private void richTextBox1_TextChanged(object sender, System.EventArgs e)
+        private void textBox1_TextChanged(object sender, System.EventArgs e)
         {
             FileChanged = true;
             Text = FilePath + "(未保存) - Covariant Script GUI";
