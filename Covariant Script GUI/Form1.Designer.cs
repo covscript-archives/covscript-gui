@@ -353,12 +353,12 @@
             // openFileDialog1
             // 
             this.openFileDialog1.DefaultExt = "csc";
-            this.openFileDialog1.Filter = "CovScript Source Code(*.csc)|*.csc|All Files(*.*)|*.*";
+            this.openFileDialog1.Filter = "CovScript源代码(*.csc)|*.csc|CovScript包文件(*.csp)|*.csp|所有文件(*.*)|*.*";
             // 
             // saveFileDialog1
             // 
             this.saveFileDialog1.DefaultExt = "csc";
-            this.saveFileDialog1.Filter = "CovScript Source Code(*.csc)|*.csc|All Files(*.*)|*.*";
+            this.saveFileDialog1.Filter = "CovScript源代码(*.csc)|*.csc|CovScript包文件(*.csp)|*.csp|所有文件(*.*)|*.*";
             // 
             // statusStrip1
             // 
