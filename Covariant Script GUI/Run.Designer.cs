@@ -44,7 +44,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(194, 14);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 21);
+            this.button1.Size = new System.Drawing.Size(75, 22);
             this.button1.TabIndex = 1;
             this.button1.Text = "运行";
             this.button1.UseVisualStyleBackColor = true;
@@ -57,7 +57,7 @@
             this.ClientSize = new System.Drawing.Size(281, 54);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.KeyPreview = true;
