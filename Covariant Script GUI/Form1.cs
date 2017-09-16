@@ -9,7 +9,9 @@ namespace Covariant_Script_GUI
     public partial class Form1 : Form
     {
         private string FileUrl = "http://ldc.atd3.cn/cs.exe";
-        private string TempPath = "C:\\Temp\\CovScriptGUI";
+        private string WorkPath = "C:\\Temp\\CovScriptGUI";
+        private string ExePath = "";
+        private string TmpPath = "";
         private string FilePath = "";
         private bool FileChanged = false;
         private Process MainProc = null;
@@ -17,41 +19,43 @@ namespace Covariant_Script_GUI
         public Form1()
         {
             InitializeComponent();
-            Directory.CreateDirectory(TempPath);
+            ExePath = Application.StartupPath + "\\cs.exe";
+            TmpPath = WorkPath + "\\temp.csc";
+            Directory.CreateDirectory(WorkPath);
         }
 
-        public void DownloadFile(string URL, string filename, System.Windows.Forms.ToolStripProgressBar prog, System.Windows.Forms.ToolStripLabel label)
+        public void DownloadFile(string URL, string filename, ToolStripProgressBar prog, ToolStripLabel label)
         {
+            File.Delete(filename);
             double percent = 0;
             try
             {
-                System.Net.HttpWebRequest Myrq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(URL);
+                System.Net.HttpWebRequest Myrq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(URL);
                 System.Net.HttpWebResponse myrp = (System.Net.HttpWebResponse)Myrq.GetResponse();
                 long totalBytes = myrp.ContentLength;
                 if (prog != null)
                     prog.Maximum = (int)totalBytes;
-                System.IO.Stream st = myrp.GetResponseStream();
-                System.IO.Stream so = new System.IO.FileStream(filename, System.IO.FileMode.Create);
+                Stream st = myrp.GetResponseStream();
+                Stream so = new FileStream(filename, FileMode.Create);
                 long totalDownloadedByte = 0;
                 byte[] by = new byte[1024];
-                int osize = st.Read(by, 0, (int)by.Length);
+                int osize = st.Read(by, 0, by.Length);
                 while (osize > 0)
                 {
                     totalDownloadedByte = osize + totalDownloadedByte;
-                    System.Windows.Forms.Application.DoEvents();
+                    Application.DoEvents();
                     so.Write(by, 0, osize);
                     if (prog != null)
                         prog.Value = (int)totalDownloadedByte;
-                    osize = st.Read(by, 0, (int)by.Length);
-
-                    percent = (double)totalDownloadedByte / (double)totalBytes * 100;
+                    osize = st.Read(by, 0, by.Length);
+                    percent = totalDownloadedByte / (double)totalBytes * 100;
                     label.Text = "下载中 " + ((int)percent).ToString() + "%";
-                    System.Windows.Forms.Application.DoEvents();
+                    Application.DoEvents();
                 }
                 so.Close();
                 st.Close();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 MessageBox.Show("下载失败", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 label.Text = "错误";
@@ -100,16 +104,21 @@ namespace Covariant_Script_GUI
 
         private void Run()
         {
-            File.WriteAllText(TempPath + "\\temp.csc",textBox1.Text);
+            File.WriteAllText(TmpPath,textBox1.Text);
             try
             {
-                MainProc = Process.Start(Application.StartupPath + "\\cs.exe", TempPath + "\\temp.csc");
+                MainProc = new Process();
+                MainProc.StartInfo.FileName = ExePath;
+                MainProc.StartInfo.Arguments = TmpPath;
+                MainProc.StartInfo.UseShellExecute = true;
+                MainProc.StartInfo.WorkingDirectory = Application.StartupPath;
+                MainProc.Start();
             }catch(System.ComponentModel.Win32Exception)
             {
                 MainProc = null;
                 if(MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo,MessageBoxIcon.Error)==DialogResult.Yes)
                 {
-                    DownloadFile(FileUrl, Application.StartupPath + "\\cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
+                    DownloadFile(FileUrl, ExePath, toolStripProgressBar1, toolStripStatusLabel1);
                 }
             }
         }
@@ -117,17 +126,22 @@ namespace Covariant_Script_GUI
         public void Run(string args)
         {
             LastArgs = args;
-            File.WriteAllText(TempPath + "\\temp.csc", textBox1.Text);
+            File.WriteAllText(TmpPath, textBox1.Text);
             try
             {
-                MainProc = Process.Start(Application.StartupPath + "\\cs.exe", TempPath + "\\temp.csc " + args);
+                MainProc = new Process();
+                MainProc.StartInfo.FileName = ExePath;
+                MainProc.StartInfo.Arguments = TmpPath + " " + args;
+                MainProc.StartInfo.UseShellExecute = true;
+                MainProc.StartInfo.WorkingDirectory = Application.StartupPath;
+                MainProc.Start();
             }
             catch (System.ComponentModel.Win32Exception)
             {
                 MainProc = null;
                 if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                 {
-                    DownloadFile(FileUrl, Application.StartupPath + "\\cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
+                    DownloadFile(FileUrl, ExePath, toolStripProgressBar1, toolStripStatusLabel1);
                 }
             }
         }
@@ -212,7 +226,7 @@ namespace Covariant_Script_GUI
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
         {
-            DownloadFile(FileUrl, Application.StartupPath + "/cs.exe", toolStripProgressBar1, toolStripStatusLabel1);
+            DownloadFile(FileUrl, ExePath, toolStripProgressBar1, toolStripStatusLabel1);
         }
         
         private void toolStripMenuItem20_Click(object sender, System.EventArgs e)
@@ -311,7 +325,7 @@ namespace Covariant_Script_GUI
                     MainProc.WaitForExit();
                 }
             }
-            Directory.Delete(TempPath, true);
+            Directory.Delete(WorkPath, true);
         }
 
         private void textBox1_TextChanged(object sender, System.EventArgs e)
