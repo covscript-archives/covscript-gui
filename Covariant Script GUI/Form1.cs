@@ -13,13 +13,14 @@ namespace Covariant_Script_GUI
         private string ExePath = "";
         private string TmpPath = "";
         private string FilePath = "";
+        private string LogPath = "";
         private bool FileChanged = false;
         private Process MainProc = null;
-        private string LastArgs = "";
         public Form1()
         {
             InitializeComponent();
             ExePath = Application.StartupPath + "\\cs.exe";
+            LogPath = Application.StartupPath + "\\cs_runtime.log";
             TmpPath = WorkPath + "\\temp.csc";
             Directory.CreateDirectory(WorkPath);
         }
@@ -123,15 +124,14 @@ namespace Covariant_Script_GUI
             }
         }
 
-        public void Run(string args)
+        public void Run(string args,bool check=false,bool debug=false)
         {
-            LastArgs = args;
             File.WriteAllText(TmpPath, textBox1.Text);
             try
             {
                 MainProc = new Process();
                 MainProc.StartInfo.FileName = ExePath;
-                MainProc.StartInfo.Arguments = TmpPath + " " + args;
+                MainProc.StartInfo.Arguments = (check?"--check ":"") + (debug?"--debug ":"") + TmpPath + " " + args;
                 MainProc.StartInfo.UseShellExecute = true;
                 MainProc.StartInfo.WorkingDirectory = Application.StartupPath;
                 MainProc.Start();
@@ -189,6 +189,11 @@ namespace Covariant_Script_GUI
             textBox1.Undo();
         }
 
+        private void toolStripMenuItem11_Click(object sender, EventArgs e)
+        {
+            new Error(File.ReadAllText(LogPath)).Show();
+        }
+
         private void toolStripMenuItem12_Click(object sender, System.EventArgs e)
         {
             textBox1.Cut();
@@ -221,7 +226,7 @@ namespace Covariant_Script_GUI
 
         private void toolStripMenuItem18_Click(object sender, EventArgs e)
         {
-            new RunForm(LastArgs, this).Show();
+            new RunForm(this).Show();
         }
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
@@ -261,7 +266,7 @@ namespace Covariant_Script_GUI
 
         private void toolStripMenuItem27_Click(object sender, EventArgs e)
         {
-            new RunForm(LastArgs,this).Show();
+            new RunForm(this).Show();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

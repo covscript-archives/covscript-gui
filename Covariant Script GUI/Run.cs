@@ -6,16 +6,15 @@ namespace Covariant_Script_GUI
     public partial class RunForm : Form
     {
         Form1 parent = null;
-        public RunForm(string args,Form1 p)
+        public RunForm(Form1 p)
         {
             InitializeComponent();
-            textBox1.Text = args;
             parent = p;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            parent.Run(textBox1.Text);
+            parent.Run(textBox1.Text,checkBox1.Checked,checkBox2.Checked);
             Close();
         }
 
