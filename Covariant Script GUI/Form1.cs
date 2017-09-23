@@ -20,7 +20,7 @@ namespace Covariant_Script_GUI
         {
             InitializeComponent();
             ExePath = Application.StartupPath + "\\cs.exe";
-            LogPath = Application.StartupPath + "\\cs_runtime.log";
+            LogPath = WorkPath + "\\cs_runtime.log";
             TmpPath = WorkPath + "\\temp.csc";
             Directory.CreateDirectory(WorkPath);
         }
@@ -110,9 +110,9 @@ namespace Covariant_Script_GUI
             {
                 MainProc = new Process();
                 MainProc.StartInfo.FileName = ExePath;
-                MainProc.StartInfo.Arguments = TmpPath;
+                MainProc.StartInfo.Arguments = "--debug " + TmpPath;
                 MainProc.StartInfo.UseShellExecute = true;
-                MainProc.StartInfo.WorkingDirectory = Application.StartupPath;
+                MainProc.StartInfo.WorkingDirectory = WorkPath;
                 MainProc.Start();
             }catch(System.ComponentModel.Win32Exception)
             {
@@ -124,7 +124,7 @@ namespace Covariant_Script_GUI
             }
         }
 
-        public void Run(string args,bool check=false,bool debug=false)
+        public void Run(string args,bool check=false,bool debug=true)
         {
             File.WriteAllText(TmpPath, textBox1.Text);
             try
@@ -133,7 +133,7 @@ namespace Covariant_Script_GUI
                 MainProc.StartInfo.FileName = ExePath;
                 MainProc.StartInfo.Arguments = (check?"--check ":"") + (debug?"--debug ":"") + TmpPath + " " + args;
                 MainProc.StartInfo.UseShellExecute = true;
-                MainProc.StartInfo.WorkingDirectory = Application.StartupPath;
+                MainProc.StartInfo.WorkingDirectory = WorkPath;
                 MainProc.Start();
             }
             catch (System.ComponentModel.Win32Exception)
@@ -191,7 +191,14 @@ namespace Covariant_Script_GUI
 
         private void toolStripMenuItem11_Click(object sender, EventArgs e)
         {
-            new Error(File.ReadAllText(LogPath)).Show();
+            try
+            {
+                new Error(File.ReadAllText(LogPath)).Show();
+            }
+            catch(FileNotFoundException)
+            {
+                MessageBox.Show("无错误信息", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void toolStripMenuItem12_Click(object sender, System.EventArgs e)
