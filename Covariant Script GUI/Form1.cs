@@ -106,6 +106,7 @@ namespace Covariant_Script_GUI
         private void Run()
         {
             File.WriteAllText(TmpPath,textBox1.Text);
+            File.Delete(LogPath);
             try
             {
                 MainProc = new Process();
@@ -127,6 +128,7 @@ namespace Covariant_Script_GUI
         public void Run(string args,bool check=false,bool debug=true)
         {
             File.WriteAllText(TmpPath, textBox1.Text);
+            File.Delete(LogPath);
             try
             {
                 MainProc = new Process();
