@@ -111,7 +111,7 @@ namespace Covariant_Script_GUI
             {
                 MainProc = new Process();
                 MainProc.StartInfo.FileName = ExePath;
-                MainProc.StartInfo.Arguments = "--debug " + TmpPath;
+                MainProc.StartInfo.Arguments = "--log-path " + LogPath + " " + TmpPath;
                 MainProc.StartInfo.UseShellExecute = true;
                 MainProc.StartInfo.WorkingDirectory = WorkPath;
                 MainProc.Start();
@@ -125,7 +125,7 @@ namespace Covariant_Script_GUI
             }
         }
 
-        public void Run(string args,bool check=false,bool debug=true)
+        public void Run(string args,bool compile_only)
         {
             File.WriteAllText(TmpPath, textBox1.Text);
             File.Delete(LogPath);
@@ -133,7 +133,7 @@ namespace Covariant_Script_GUI
             {
                 MainProc = new Process();
                 MainProc.StartInfo.FileName = ExePath;
-                MainProc.StartInfo.Arguments = (check?"--check ":"") + (debug?"--debug ":"") + TmpPath + " " + args;
+                MainProc.StartInfo.Arguments = (compile_only?"--compile-only ":"") + "--log-path " + LogPath + " " + TmpPath + " " + args;
                 MainProc.StartInfo.UseShellExecute = true;
                 MainProc.StartInfo.WorkingDirectory = WorkPath;
                 MainProc.Start();

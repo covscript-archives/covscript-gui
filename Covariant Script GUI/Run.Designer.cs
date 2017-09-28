@@ -64,6 +64,7 @@
             // 
             // checkBox2
             // 
+            this.checkBox2.AutoCheck = false;
             this.checkBox2.AutoSize = true;
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;

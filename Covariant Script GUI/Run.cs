@@ -14,7 +14,7 @@ namespace Covariant_Script_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            parent.Run(textBox1.Text,checkBox1.Checked,checkBox2.Checked);
+            parent.Run(textBox1.Text,checkBox1.Checked);
             Close();
         }
 
