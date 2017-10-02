@@ -14,6 +14,7 @@ namespace Covariant_Script_GUI
         private string TmpPath = "";
         private string FilePath = "";
         private string LogPath = "";
+        private string DefaultArgs = "";
         private bool FileChanged = false;
         private Process MainProc = null;
         public Form1()
@@ -22,6 +23,7 @@ namespace Covariant_Script_GUI
             ExePath = Application.StartupPath + "\\cs.exe";
             LogPath = WorkPath + "\\cs_runtime.log";
             TmpPath = WorkPath + "\\temp.csc";
+            DefaultArgs = "--wait-before-exit --log-path " + LogPath;
             Directory.CreateDirectory(WorkPath);
         }
 
@@ -111,7 +113,7 @@ namespace Covariant_Script_GUI
             {
                 MainProc = new Process();
                 MainProc.StartInfo.FileName = ExePath;
-                MainProc.StartInfo.Arguments = "--log-path " + LogPath + " " + TmpPath;
+                MainProc.StartInfo.Arguments = DefaultArgs + " " + TmpPath;
                 MainProc.StartInfo.UseShellExecute = true;
                 MainProc.StartInfo.WorkingDirectory = WorkPath;
                 MainProc.Start();
@@ -133,7 +135,7 @@ namespace Covariant_Script_GUI
             {
                 MainProc = new Process();
                 MainProc.StartInfo.FileName = ExePath;
-                MainProc.StartInfo.Arguments = (compile_only?"--compile-only ":"") + "--log-path " + LogPath + " " + TmpPath + " " + args;
+                MainProc.StartInfo.Arguments = DefaultArgs + (compile_only?" --compile-only ":" ") + TmpPath + " " + args;
                 MainProc.StartInfo.UseShellExecute = true;
                 MainProc.StartInfo.WorkingDirectory = WorkPath;
                 MainProc.Start();
