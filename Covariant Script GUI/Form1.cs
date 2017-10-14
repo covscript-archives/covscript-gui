@@ -9,8 +9,10 @@ namespace Covariant_Script_GUI
     public partial class Form1 : Form
     {
         private string FileUrl = "http://ldc.atd3.cn/cs.exe";
+        private string REPLUrl = "http://ldc.atd3.cn/cs_repl.exe";
         private string WorkPath = "C:\\Temp\\CovScriptGUI";
         private string ExePath = "";
+        private string REPLPath = "";
         private string TmpPath = "";
         private string FilePath = "";
         private string LogPath = "";
@@ -21,6 +23,7 @@ namespace Covariant_Script_GUI
         {
             InitializeComponent();
             ExePath = Application.StartupPath + "\\cs.exe";
+            REPLPath = Application.StartupPath + "\\cs_repl.exe";
             LogPath = WorkPath + "\\cs_runtime.log";
             TmpPath = WorkPath + "\\temp.csc";
             DefaultArgs = "--wait-before-exit --log-path " + LogPath;
@@ -150,6 +153,28 @@ namespace Covariant_Script_GUI
             }
         }
 
+        private void RunREPL()
+        {
+            File.Delete(LogPath);
+            try
+            {
+                MainProc = new Process();
+                MainProc.StartInfo.FileName = REPLPath;
+                MainProc.StartInfo.Arguments = DefaultArgs;
+                MainProc.StartInfo.UseShellExecute = true;
+                MainProc.StartInfo.WorkingDirectory = WorkPath;
+                MainProc.Start();
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                MainProc = null;
+                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                {
+                    DownloadFile(REPLUrl, REPLPath, toolStripProgressBar1, toolStripStatusLabel1);
+                }
+            }
+        }
+
         private void toolStripMenuItem5_Click(object sender, System.EventArgs e)
         {
             CheckUnsave();
@@ -243,6 +268,7 @@ namespace Covariant_Script_GUI
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
         {
             DownloadFile(FileUrl, ExePath, toolStripProgressBar1, toolStripStatusLabel1);
+            DownloadFile(REPLUrl, REPLPath, toolStripProgressBar1, toolStripStatusLabel1);
         }
         
         private void toolStripMenuItem20_Click(object sender, System.EventArgs e)
@@ -348,6 +374,11 @@ namespace Covariant_Script_GUI
         {
             FileChanged = true;
             Text = FilePath + "(未保存) - Covariant Script GUI";
+        }
+
+        private void toolStripMenuItem21_Click(object sender, EventArgs e)
+        {
+            RunREPL();
         }
     }
 }
