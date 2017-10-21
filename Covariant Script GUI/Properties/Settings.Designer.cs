@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Covariant_Script_GUI.Properties {
+namespace Covariant_Script.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

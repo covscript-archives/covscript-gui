@@ -57,7 +57,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(400, 80);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Covariant Script GUI 1.0.3\r\n版权所有 © 2017 Michael Lee(李登淳)。\r\n该程序自带绝对保证; 详情请参阅<http:" +
+            this.label1.Text = "Covariant Script GUI 1.1.0\r\n版权所有 © 2017 Michael Lee(李登淳)。\r\n该程序自带绝对保证; 详情请参阅<http:" +
     "//www.gnu.org/licenses/>。\r\n这是免费软件，欢迎您在特定条件下重新分发。\r\n请访问<http://covscript.org/>了解更多" +
     "信息。";
             // 

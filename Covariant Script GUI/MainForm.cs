@@ -1,36 +1,72 @@
-﻿using Covariant_Script;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Covariant_Script_GUI
+namespace Covariant_Script
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        private string FileUrl = "http://ldc.atd3.cn/cs.exe";
-        private string REPLUrl = "http://ldc.atd3.cn/cs_repl.exe";
-        private string WorkPath = "C:\\Temp\\CovScriptGUI";
-        private string ExePath = "";
-        private string REPLPath = "";
-        private string TmpPath = "";
+        private ProgramSettings settings = new ProgramSettings();
+        private string CsUrl = "http://ldc.atd3.cn/cs.exe";
+        private string CsReplUrl = "http://ldc.atd3.cn/cs_repl.exe";
+        private string CsBinName = "\\cs.exe";
+        private string CsReplBinName = "\\cs_repl.exe";
+        private string RuntimeLogName = "\\cs_runtime.log";
+        private string TmpPath;
         private string FilePath = "";
-        private string LogPath = "";
-        private string DefaultArgs = "";
+        private string DefaultArgs = "--wait-before-exit";
         private bool FileChanged = false;
-        private Process MainProc = null;
-        public Form1()
+        private Process CsProcess = null;
+
+        internal ProgramSettings Settings { get => settings; set => settings = value; }
+
+        public MainForm()
         {
             InitializeComponent();
-            ExePath = Application.StartupPath + "\\cs.exe";
-            REPLPath = Application.StartupPath + "\\cs_repl.exe";
-            LogPath = WorkPath + "\\cs_runtime.log";
-            TmpPath = WorkPath + "\\temp.csc";
-            DefaultArgs = "--wait-before-exit --log-path " + LogPath;
-            Directory.CreateDirectory(WorkPath);
+            TmpPath = settings.work_path + "\\Temp.csc";
+            textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
+            Application.DoEvents();
         }
 
-        public void DownloadFile(string URL, string filename, ToolStripProgressBar prog, ToolStripLabel label)
+        private string ComposeDefaultArguments()
+        {
+            string args = DefaultArgs;
+            args += " --import-path \"" + Settings.import_path + "\" --log-path \"" + Settings.log_path + RuntimeLogName + "\"";
+            return args;
+        }
+
+        private string ComposeArguments(string file_path,bool compile_only,string program_args)
+        {
+            string args = ComposeDefaultArguments();
+            if (compile_only)
+                args += " --compile-only";
+            args += " \"" + file_path + "\" " + program_args;
+            return args;
+        }
+
+        private void StartProcess(string bin_name,string args)
+        {
+            try
+            {
+                CsProcess = new Process();
+                CsProcess.StartInfo.FileName = bin_name;
+                CsProcess.StartInfo.Arguments = args;
+                CsProcess.StartInfo.UseShellExecute = true;
+                CsProcess.StartInfo.WorkingDirectory = Settings.work_path;
+                CsProcess.Start();
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                CsProcess = null;
+                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                {
+                    DownloadFile(CsUrl, bin_name, toolStripProgressBar1, toolStripStatusLabel1);
+                }
+            }
+        }
+
+        private void DownloadFile(string URL, string filename, ToolStripProgressBar prog, ToolStripLabel label)
         {
             File.Delete(filename);
             double percent = 0;
@@ -111,68 +147,22 @@ namespace Covariant_Script_GUI
         private void Run()
         {
             File.WriteAllText(TmpPath,textBox1.Text);
-            File.Delete(LogPath);
-            try
-            {
-                MainProc = new Process();
-                MainProc.StartInfo.FileName = ExePath;
-                MainProc.StartInfo.Arguments = DefaultArgs + " " + TmpPath;
-                MainProc.StartInfo.UseShellExecute = true;
-                MainProc.StartInfo.WorkingDirectory = WorkPath;
-                MainProc.Start();
-            }catch(System.ComponentModel.Win32Exception)
-            {
-                MainProc = null;
-                if(MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo,MessageBoxIcon.Error)==DialogResult.Yes)
-                {
-                    DownloadFile(FileUrl, ExePath, toolStripProgressBar1, toolStripStatusLabel1);
-                }
-            }
+            File.Delete(Settings.log_path+RuntimeLogName);
+            StartProcess(Settings.program_path + CsBinName, ComposeArguments(TmpPath,false,""));
         }
 
-        public void Run(string args,bool compile_only)
+        public void RunWithArgs(bool compile_only, string args)
         {
             File.WriteAllText(TmpPath, textBox1.Text);
-            File.Delete(LogPath);
-            try
-            {
-                MainProc = new Process();
-                MainProc.StartInfo.FileName = ExePath;
-                MainProc.StartInfo.Arguments = DefaultArgs + (compile_only?" --compile-only ":" ") + TmpPath + " " + args;
-                MainProc.StartInfo.UseShellExecute = true;
-                MainProc.StartInfo.WorkingDirectory = WorkPath;
-                MainProc.Start();
-            }
-            catch (System.ComponentModel.Win32Exception)
-            {
-                MainProc = null;
-                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
-                {
-                    DownloadFile(FileUrl, ExePath, toolStripProgressBar1, toolStripStatusLabel1);
-                }
-            }
+            File.Delete(Settings.log_path + RuntimeLogName);
+            StartProcess(Settings.program_path + CsBinName, ComposeArguments(TmpPath,compile_only,args));
         }
 
-        private void RunREPL()
+        private void RunRepl()
         {
-            File.Delete(LogPath);
-            try
-            {
-                MainProc = new Process();
-                MainProc.StartInfo.FileName = REPLPath;
-                MainProc.StartInfo.Arguments = DefaultArgs;
-                MainProc.StartInfo.UseShellExecute = true;
-                MainProc.StartInfo.WorkingDirectory = WorkPath;
-                MainProc.Start();
-            }
-            catch (System.ComponentModel.Win32Exception)
-            {
-                MainProc = null;
-                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
-                {
-                    DownloadFile(REPLUrl, REPLPath, toolStripProgressBar1, toolStripStatusLabel1);
-                }
-            }
+            File.WriteAllText(TmpPath, textBox1.Text);
+            File.Delete(Settings.log_path + RuntimeLogName);
+            StartProcess(Settings.program_path + CsReplBinName, ComposeDefaultArguments());
         }
 
         private void toolStripMenuItem5_Click(object sender, System.EventArgs e)
@@ -222,7 +212,7 @@ namespace Covariant_Script_GUI
         {
             try
             {
-                new Error(File.ReadAllText(LogPath)).Show();
+                new Error(File.ReadAllText(Settings.log_path + RuntimeLogName)).Show();
             }
             catch(FileNotFoundException)
             {
@@ -252,7 +242,7 @@ namespace Covariant_Script_GUI
 
         private void toolStripMenuItem16_Click(object sender, EventArgs e)
         {
-            new InfoForm().Show();
+            new InfoForm().ShowDialog();
         }
 
         private void toolStripMenuItem17_Click(object sender, System.EventArgs e)
@@ -262,13 +252,13 @@ namespace Covariant_Script_GUI
 
         private void toolStripMenuItem18_Click(object sender, EventArgs e)
         {
-            new RunForm(this).Show();
+            new RunForm(this).ShowDialog();
         }
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
         {
-            DownloadFile(FileUrl, ExePath, toolStripProgressBar1, toolStripStatusLabel1);
-            DownloadFile(REPLUrl, REPLPath, toolStripProgressBar1, toolStripStatusLabel1);
+            DownloadFile(CsUrl, Settings.program_path + CsBinName, toolStripProgressBar1, toolStripStatusLabel1);
+            DownloadFile(CsReplUrl, Settings.program_path + CsReplBinName, toolStripProgressBar1, toolStripStatusLabel1);
         }
         
         private void toolStripMenuItem20_Click(object sender, System.EventArgs e)
@@ -303,7 +293,7 @@ namespace Covariant_Script_GUI
 
         private void toolStripMenuItem27_Click(object sender, EventArgs e)
         {
-            new RunForm(this).Show();
+            new RunForm(this).ShowDialog();
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -359,15 +349,15 @@ namespace Covariant_Script_GUI
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (MainProc != null)
+            if (CsProcess != null)
             {
-                if (!MainProc.HasExited)
+                if (!CsProcess.HasExited)
                 {
-                    MainProc.Kill();
-                    MainProc.WaitForExit();
+                    CsProcess.Kill();
+                    CsProcess.WaitForExit();
                 }
             }
-            Directory.Delete(WorkPath, true);
+            File.Delete(TmpPath);
         }
 
         private void textBox1_TextChanged(object sender, System.EventArgs e)
@@ -378,7 +368,19 @@ namespace Covariant_Script_GUI
 
         private void toolStripMenuItem21_Click(object sender, EventArgs e)
         {
-            RunREPL();
+            RunRepl();
+        }
+
+        private void toolStripMenuItem28_Click(object sender, EventArgs e)
+        {
+            new Settings(settings).ShowDialog();
+            textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
+            Application.DoEvents();
+        }
+
+        private void toolStripMenuItem29_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://covariant.cn/cs");
         }
     }
 }

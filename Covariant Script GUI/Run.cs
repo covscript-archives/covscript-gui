@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Covariant_Script_GUI
+namespace Covariant_Script
 {
     public partial class RunForm : Form
     {
-        Form1 parent = null;
-        public RunForm(Form1 p)
+        MainForm parent = null;
+        public RunForm(MainForm p)
         {
             InitializeComponent();
             parent = p;
@@ -14,7 +14,7 @@ namespace Covariant_Script_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            parent.Run(textBox1.Text,checkBox1.Checked);
+            parent.RunWithArgs(checkBox1.Checked, textBox1.Text);
             Close();
         }
 
