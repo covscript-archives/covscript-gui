@@ -2,17 +2,14 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using Microsoft;
+using Microsoft.Win32;
 
 namespace Covariant_Script
 {
     public partial class MainForm : Form
     {
         private ProgramSettings settings = new ProgramSettings();
-        private string CsUrl = "http://ldc.atd3.cn/cs.exe";
-        private string CsReplUrl = "http://ldc.atd3.cn/cs_repl.exe";
-        private string CsBinName = "\\cs.exe";
-        private string CsReplBinName = "\\cs_repl.exe";
-        private string RuntimeLogName = "\\cs_runtime.log";
         private string TmpPath;
         private string FilePath = "";
         private string DefaultArgs = "--wait-before-exit";
@@ -24,46 +21,10 @@ namespace Covariant_Script
         public MainForm()
         {
             InitializeComponent();
-            TmpPath = settings.work_path + "\\Temp.csc";
+            ReadRegistry();
+            TmpPath = Path.GetTempFileName();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
             Application.DoEvents();
-        }
-
-        private string ComposeDefaultArguments()
-        {
-            string args = DefaultArgs;
-            args += " --import-path \"" + Settings.import_path + "\" --log-path \"" + Settings.log_path + RuntimeLogName + "\"";
-            return args;
-        }
-
-        private string ComposeArguments(string file_path,bool compile_only,string program_args)
-        {
-            string args = ComposeDefaultArguments();
-            if (compile_only)
-                args += " --compile-only";
-            args += " \"" + file_path + "\" " + program_args;
-            return args;
-        }
-
-        private void StartProcess(string bin_name,string args)
-        {
-            try
-            {
-                CsProcess = new Process();
-                CsProcess.StartInfo.FileName = bin_name;
-                CsProcess.StartInfo.Arguments = args;
-                CsProcess.StartInfo.UseShellExecute = true;
-                CsProcess.StartInfo.WorkingDirectory = Settings.work_path;
-                CsProcess.Start();
-            }
-            catch (System.ComponentModel.Win32Exception)
-            {
-                CsProcess = null;
-                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
-                {
-                    DownloadFile(CsUrl, bin_name, toolStripProgressBar1, toolStripStatusLabel1);
-                }
-            }
         }
 
         private void DownloadFile(string URL, string filename, ToolStripProgressBar prog, ToolStripLabel label)
@@ -93,22 +54,102 @@ namespace Covariant_Script
                     percent = totalDownloadedByte / (double)totalBytes * 100;
                     label.Text = "下载中 " + ((int)percent).ToString() + "%";
                     Application.DoEvents();
-                }
+                }
                 so.Close();
                 st.Close();
+            }
+            catch (Exception e)
+            {
+                label.Text = "错误";
+                if (prog != null)
+                    prog.Value = 0;
+                throw e;
+            }
+            label.Text = "就绪";
+            if (prog != null)
+                prog.Value = 0;
+        }
+
+        private void ReadRegistry()
+        {
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(Configs.Names.CsRegistry);
+            Object bin_path = key.GetValue(Configs.RegistryKey.BinPath);
+            Object ipt_path = key.GetValue(Configs.RegistryKey.ImportPath);
+            Object log_path = key.GetValue(Configs.RegistryKey.LogPath);
+            Object font_size = key.GetValue(Configs.RegistryKey.FontSize);
+            if (bin_path == null || ipt_path == null || log_path == null || font_size == null)
+            {
+                key.Close();
+                settings.InitDefault();
+                SaveRegistry();
+            }
+            else
+            {
+                settings.program_path = bin_path.ToString();
+                settings.import_path = ipt_path.ToString();
+                settings.log_path = log_path.ToString();
+                settings.font_size = int.Parse(font_size.ToString());
+                key.Close();
+            }
+        }
+
+        private void SaveRegistry()
+        {
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(Configs.Names.CsRegistry);
+            key.SetValue(Configs.RegistryKey.BinPath, settings.program_path);
+            key.SetValue(Configs.RegistryKey.ImportPath, settings.import_path);
+            key.SetValue(Configs.RegistryKey.LogPath, settings.log_path);
+            key.SetValue(Configs.RegistryKey.FontSize, settings.font_size);
+        }
+
+        private string ComposeDefaultArguments()
+        {
+            string args = DefaultArgs;
+            args += " --import-path \"" + Settings.import_path + "\" --log-path \"" + Settings.log_path + Configs.Names.CsLog + "\"";
+            return args;
+        }
+
+        private string ComposeArguments(string file_path,bool compile_only,string program_args)
+        {
+            string args = ComposeDefaultArguments();
+            if (compile_only)
+                args += " --compile-only";
+            args += " \"" + file_path + "\" " + program_args;
+            return args;
+        }
+
+        private void DownloadCompoents()
+        {
+            try
+            {
+                DownloadFile(Configs.Urls.Cs, Settings.program_path + Configs.Names.CsBin, toolStripProgressBar1, toolStripStatusLabel1);
+                DownloadFile(Configs.Urls.CsRepl, Settings.program_path + Configs.Names.CsReplBin, toolStripProgressBar1, toolStripStatusLabel1);
             }
             catch (Exception)
             {
                 MessageBox.Show("下载失败", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                label.Text = "错误";
-                if (prog != null)
-                    prog.Value = 0;
                 return;
             }
             MessageBox.Show("下载完成", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            label.Text = "就绪";
-            if (prog != null)
-                prog.Value = 0;
+        }
+
+        private void StartProcess(string bin_name,string args)
+        {
+            try
+            {
+                CsProcess = new Process();
+                CsProcess.StartInfo.FileName = bin_name;
+                CsProcess.StartInfo.Arguments = args;
+                CsProcess.StartInfo.UseShellExecute = true;
+                CsProcess.StartInfo.WorkingDirectory = Configs.Paths.WorkPath;
+                CsProcess.Start();
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                CsProcess = null;
+                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                    DownloadCompoents();
+            }
         }
 
         private void OpenFile(string path)
@@ -147,22 +188,22 @@ namespace Covariant_Script
         private void Run()
         {
             File.WriteAllText(TmpPath,textBox1.Text);
-            File.Delete(Settings.log_path+RuntimeLogName);
-            StartProcess(Settings.program_path + CsBinName, ComposeArguments(TmpPath,false,""));
+            File.Delete(Settings.log_path+Configs.Names.CsLog);
+            StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath,false,""));
         }
 
         public void RunWithArgs(bool compile_only, string args)
         {
             File.WriteAllText(TmpPath, textBox1.Text);
-            File.Delete(Settings.log_path + RuntimeLogName);
-            StartProcess(Settings.program_path + CsBinName, ComposeArguments(TmpPath,compile_only,args));
+            File.Delete(Settings.log_path + Configs.Names.CsLog);
+            StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath,compile_only,args));
         }
 
         private void RunRepl()
         {
             File.WriteAllText(TmpPath, textBox1.Text);
-            File.Delete(Settings.log_path + RuntimeLogName);
-            StartProcess(Settings.program_path + CsReplBinName, ComposeDefaultArguments());
+            File.Delete(Settings.log_path + Configs.Names.CsLog);
+            StartProcess(Settings.program_path + Configs.Names.CsReplBin, ComposeDefaultArguments());
         }
 
         private void toolStripMenuItem5_Click(object sender, System.EventArgs e)
@@ -212,7 +253,7 @@ namespace Covariant_Script
         {
             try
             {
-                new Error(File.ReadAllText(Settings.log_path + RuntimeLogName)).Show();
+                new Error(File.ReadAllText(Settings.log_path + Configs.Names.CsLog)).Show();
             }
             catch(FileNotFoundException)
             {
@@ -257,8 +298,7 @@ namespace Covariant_Script
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
         {
-            DownloadFile(CsUrl, Settings.program_path + CsBinName, toolStripProgressBar1, toolStripStatusLabel1);
-            DownloadFile(CsReplUrl, Settings.program_path + CsReplBinName, toolStripProgressBar1, toolStripStatusLabel1);
+            DownloadCompoents();
         }
         
         private void toolStripMenuItem20_Click(object sender, System.EventArgs e)
@@ -357,6 +397,7 @@ namespace Covariant_Script
                     CsProcess.WaitForExit();
                 }
             }
+            SaveRegistry();
             File.Delete(TmpPath);
         }
 
@@ -374,13 +415,14 @@ namespace Covariant_Script
         private void toolStripMenuItem28_Click(object sender, EventArgs e)
         {
             new Settings(settings).ShowDialog();
+            SaveRegistry();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
             Application.DoEvents();
         }
 
         private void toolStripMenuItem29_Click(object sender, EventArgs e)
         {
-            Process.Start("http://covariant.cn/cs");
+            Process.Start(Configs.Urls.WebSite);
         }
     }
 }

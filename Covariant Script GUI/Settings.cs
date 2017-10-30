@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Covariant_Script
 {
@@ -9,6 +10,11 @@ namespace Covariant_Script
         {
             InitializeComponent();
             parent_settings = s;
+            InitSettings();
+        }
+
+        private void InitSettings()
+        {
             textBox1.Text = parent_settings.import_path;
             textBox2.Text = parent_settings.program_path;
             textBox3.Text = parent_settings.log_path;
@@ -17,6 +23,12 @@ namespace Covariant_Script
 
         private void button1_Click(object sender, System.EventArgs e)
         {
+            parent_settings.InitDefault();
+            InitSettings();
+        }
+
+        private void button2_Click(object sender, System.EventArgs e)
+        {
             parent_settings.import_path = textBox1.Text;
             parent_settings.program_path = textBox2.Text;
             parent_settings.log_path = textBox3.Text;
@@ -24,9 +36,19 @@ namespace Covariant_Script
             Close();
         }
 
-        private void button2_Click(object sender, System.EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void Settings_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:
+                    button2_Click(this, EventArgs.Empty);
+                    break;
+            }
         }
     }
 }
