@@ -10,21 +10,22 @@ namespace Covariant_Script
         {
             InitializeComponent();
             parent_settings = s;
-            InitSettings();
+            InitSettings(s);
         }
 
-        private void InitSettings()
+        private void InitSettings(ProgramSettings s)
         {
-            textBox1.Text = parent_settings.import_path;
-            textBox2.Text = parent_settings.program_path;
-            textBox3.Text = parent_settings.log_path;
-            numericUpDown1.Value = parent_settings.font_size;
+            textBox1.Text = s.import_path;
+            textBox2.Text = s.program_path;
+            textBox3.Text = s.log_path;
+            numericUpDown1.Value = s.font_size;
         }
 
         private void button1_Click(object sender, System.EventArgs e)
         {
-            parent_settings.InitDefault();
-            InitSettings();
+            ProgramSettings s = new ProgramSettings();
+            s.InitDefault();
+            InitSettings(s);
         }
 
         private void button2_Click(object sender, System.EventArgs e)

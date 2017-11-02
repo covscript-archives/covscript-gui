@@ -14,7 +14,7 @@ namespace Covariant_Script
         public int font_size;
         public void InitDefault()
         {
-            string work_path = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\CovScriptGUI";
+            string work_path = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\CovScript";
             import_path = work_path + "\\Imports";
             program_path = work_path + "\\Bin";
             log_path = work_path + "\\Logs";
