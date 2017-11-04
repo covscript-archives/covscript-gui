@@ -29,14 +29,13 @@ namespace Covariant_Script
         class Urls
         {
             public static string WebSite = "http://covariant.cn/cs";
-            public static string Cs = "http://ldc.atd3.cn/cs.exe";
-            public static string CsRepl = "http://ldc.atd3.cn/cs_repl.exe";
         }
         class Names
         {
             public static string CsBin = "\\cs.exe";
             public static string CsReplBin = "\\cs_repl.exe";
-            public static string CsLog = "\\cs_runtime.log";
+            public static string CsInstBin = "\\cs_inst.exe";
+            public static string CsLog = "\\cs_gui.log";
             public static string CsRegistry = "software\\CovScriptGUI";
         }
         class RegistryKey

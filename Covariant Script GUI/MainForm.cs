@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using Microsoft;
-using Microsoft.Win32;
 
 namespace Covariant_Script
 {
@@ -25,49 +24,6 @@ namespace Covariant_Script
             TmpPath = Path.GetTempFileName();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
             Application.DoEvents();
-        }
-
-        private void DownloadFile(string URL, string filename, ToolStripProgressBar prog, ToolStripLabel label)
-        {
-            File.Delete(filename);
-            double percent = 0;
-            try
-            {
-                System.Net.HttpWebRequest Myrq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(URL);
-                System.Net.HttpWebResponse myrp = (System.Net.HttpWebResponse)Myrq.GetResponse();
-                long totalBytes = myrp.ContentLength;
-                if (prog != null)
-                    prog.Maximum = (int)totalBytes;
-                Stream st = myrp.GetResponseStream();
-                Stream so = new FileStream(filename, FileMode.Create);
-                long totalDownloadedByte = 0;
-                byte[] by = new byte[1024];
-                int osize = st.Read(by, 0, by.Length);
-                while (osize > 0)
-                {
-                    totalDownloadedByte = osize + totalDownloadedByte;
-                    Application.DoEvents();
-                    so.Write(by, 0, osize);
-                    if (prog != null)
-                        prog.Value = (int)totalDownloadedByte;
-                    osize = st.Read(by, 0, by.Length);
-                    percent = totalDownloadedByte / (double)totalBytes * 100;
-                    label.Text = "下载中 " + ((int)percent).ToString() + "%";
-                    Application.DoEvents();
-                }
-                so.Close();
-                st.Close();
-            }
-            catch (Exception e)
-            {
-                label.Text = "错误";
-                if (prog != null)
-                    prog.Value = 0;
-                throw e;
-            }
-            label.Text = "就绪";
-            if (prog != null)
-                prog.Value = 0;
         }
 
         private void ReadRegistry()
@@ -122,19 +78,22 @@ namespace Covariant_Script
         {
             try
             {
-                DownloadFile(Configs.Urls.Cs, Settings.program_path + Configs.Names.CsBin, toolStripProgressBar1, toolStripStatusLabel1);
-                DownloadFile(Configs.Urls.CsRepl, Settings.program_path + Configs.Names.CsReplBin, toolStripProgressBar1, toolStripStatusLabel1);
+                Process.Start(settings.program_path + Configs.Names.CsInstBin);
             }
             catch (Exception)
             {
-                MessageBox.Show("下载失败", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("未找到Covariant Script安装程序", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            MessageBox.Show("下载完成", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void StartProcess(string bin_name,string args)
         {
+            if(CsProcess!=null&&!CsProcess.HasExited)
+            {
+                MessageBox.Show("不能同时运行两个进程", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             try
             {
                 CsProcess = new Process();
@@ -157,7 +116,8 @@ namespace Covariant_Script
             textBox1.Text = File.ReadAllText(path);
             FilePath = path;
             FileChanged = false;
-            Text = path + " - Covariant Script GUI";
+            toolStripStatusLabel2.Text = "";
+            toolStripStatusLabel1.Text = path;
         }
 
         private void SaveFile(string path)
@@ -165,7 +125,8 @@ namespace Covariant_Script
             File.WriteAllText(path, textBox1.Text);
             FilePath = path;
             FileChanged = false;
-            Text = path + " - Covariant Script GUI";
+            toolStripStatusLabel2.Text = "";
+            toolStripStatusLabel1.Text = path;
         }
 
         private void CheckUnsave()
@@ -212,7 +173,8 @@ namespace Covariant_Script
             textBox1.Clear();
             FilePath = "";
             FileChanged = false;
-            Text = "Covariant Script GUI";
+            toolStripStatusLabel2.Text = "";
+            toolStripStatusLabel1.Text = "新文件";
         }
 
         private void toolStripMenuItem6_Click(object sender, System.EventArgs e)
@@ -404,7 +366,7 @@ namespace Covariant_Script
         private void textBox1_TextChanged(object sender, System.EventArgs e)
         {
             FileChanged = true;
-            Text = FilePath + "(未保存) - Covariant Script GUI";
+            toolStripStatusLabel2.Text = "(未保存)";
         }
 
         private void toolStripMenuItem21_Click(object sender, EventArgs e)
