@@ -51,6 +51,7 @@
             this.toolStripMenuItem18 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem28 = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,7 +72,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -271,6 +271,13 @@
             this.toolStripMenuItem11.Text = "查看错误信息";
             this.toolStripMenuItem11.Click += new System.EventHandler(this.toolStripMenuItem11_Click);
             // 
+            // toolStripMenuItem19
+            // 
+            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
+            this.toolStripMenuItem19.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItem19.Text = "运行安装程序";
+            this.toolStripMenuItem19.Click += new System.EventHandler(this.toolStripMenuItem19_Click);
+            // 
             // toolStripMenuItem21
             // 
             this.toolStripMenuItem21.Name = "toolStripMenuItem21";
@@ -420,13 +427,7 @@
             this.textBox1.TabIndex = 3;
             this.textBox1.WordWrap = false;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // toolStripMenuItem19
-            // 
-            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
-            this.toolStripMenuItem19.Size = new System.Drawing.Size(184, 22);
-            this.toolStripMenuItem19.Text = "运行安装程序";
-            this.toolStripMenuItem19.Click += new System.EventHandler(this.toolStripMenuItem19_Click);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // statusStrip1
             // 

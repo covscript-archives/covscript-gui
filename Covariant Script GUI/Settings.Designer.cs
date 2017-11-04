@@ -42,9 +42,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -121,6 +124,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.numericUpDown2);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.numericUpDown1);
             this.groupBox2.Location = new System.Drawing.Point(12, 163);
@@ -153,7 +158,7 @@
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 21);
+            this.numericUpDown1.Size = new System.Drawing.Size(60, 21);
             this.numericUpDown1.TabIndex = 0;
             this.numericUpDown1.Value = new decimal(new int[] {
             12,
@@ -191,6 +196,37 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Location = new System.Drawing.Point(223, 18);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(60, 21);
+            this.numericUpDown2.TabIndex = 2;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(164, 20);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 12);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "缩进宽度";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -214,6 +250,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -233,5 +270,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
     }
 }

@@ -33,7 +33,8 @@ namespace Covariant_Script
             Object ipt_path = key.GetValue(Configs.RegistryKey.ImportPath);
             Object log_path = key.GetValue(Configs.RegistryKey.LogPath);
             Object font_size = key.GetValue(Configs.RegistryKey.FontSize);
-            if (bin_path == null || ipt_path == null || log_path == null || font_size == null)
+            Object tab_width = key.GetValue(Configs.RegistryKey.TabWidth);
+            if (bin_path == null || ipt_path == null || log_path == null || font_size == null || tab_width == null)
             {
                 key.Close();
                 settings.InitDefault();
@@ -45,6 +46,7 @@ namespace Covariant_Script
                 settings.import_path = ipt_path.ToString();
                 settings.log_path = log_path.ToString();
                 settings.font_size = int.Parse(font_size.ToString());
+                settings.tab_width = int.Parse(tab_width.ToString());
                 key.Close();
             }
         }
@@ -56,6 +58,7 @@ namespace Covariant_Script
             key.SetValue(Configs.RegistryKey.ImportPath, settings.import_path);
             key.SetValue(Configs.RegistryKey.LogPath, settings.log_path);
             key.SetValue(Configs.RegistryKey.FontSize, settings.font_size);
+            key.SetValue(Configs.RegistryKey.TabWidth, settings.tab_width);
         }
 
         private string ComposeDefaultArguments()
@@ -385,6 +388,17 @@ namespace Covariant_Script
         private void toolStripMenuItem29_Click(object sender, EventArgs e)
         {
             Process.Start(Configs.Urls.WebSite);
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\t')
+            {
+                int idx = textBox1.SelectionStart + settings.tab_width;
+                textBox1.Text = textBox1.Text.Insert(textBox1.SelectionStart, new string(' ', settings.tab_width));
+                textBox1.SelectionStart = idx;
+                e.Handled = true;
+            }
         }
     }
 }

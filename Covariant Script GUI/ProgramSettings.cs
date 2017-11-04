@@ -12,6 +12,7 @@ namespace Covariant_Script
         public string program_path;
         public string log_path;
         public int font_size;
+        public int tab_width;
         public void InitDefault()
         {
             string work_path = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\CovScript";
@@ -19,6 +20,7 @@ namespace Covariant_Script
             program_path = work_path + "\\Bin";
             log_path = work_path + "\\Logs";
             font_size = 12;
+            tab_width = 4;
             Directory.CreateDirectory(import_path);
             Directory.CreateDirectory(program_path);
             Directory.CreateDirectory(log_path);
@@ -44,6 +46,7 @@ namespace Covariant_Script
             public static string ImportPath = "ImportPath";
             public static string LogPath = "LogPath";
             public static string FontSize = "FontSize";
+            public static string TabWidth = "TabWidth";
         }
         class Paths
         {

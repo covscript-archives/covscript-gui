@@ -19,6 +19,7 @@ namespace Covariant_Script
             textBox2.Text = s.program_path;
             textBox3.Text = s.log_path;
             numericUpDown1.Value = s.font_size;
+            numericUpDown2.Value = s.tab_width;
         }
 
         private void button1_Click(object sender, System.EventArgs e)
@@ -34,6 +35,7 @@ namespace Covariant_Script
             parent_settings.program_path = textBox2.Text;
             parent_settings.log_path = textBox3.Text;
             parent_settings.font_size = (int)numericUpDown1.Value;
+            parent_settings.tab_width = (int)numericUpDown2.Value;
             Close();
         }
 
