@@ -392,13 +392,13 @@ namespace Covariant_Script
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '\t')
+            /*if (e.KeyChar == '\t')
             {
                 int idx = textBox1.SelectionStart + settings.tab_width;
                 textBox1.Text = textBox1.Text.Insert(textBox1.SelectionStart, new string(' ', settings.tab_width));
                 textBox1.SelectionStart = idx;
                 e.Handled = true;
-            }
+            }*/
         }
     }
 }
