@@ -7,6 +7,7 @@ namespace Covariant_Script
         public InfoForm()
         {
             InitializeComponent();
+            label1.Text = "Covariant Script GUI v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
     }
 }
