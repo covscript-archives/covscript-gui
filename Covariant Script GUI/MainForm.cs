@@ -17,13 +17,15 @@ namespace Covariant_Script
 
         internal ProgramSettings Settings { get => settings; set => settings = value; }
 
-        public MainForm()
+        public MainForm(string[] args)
         {
             InitializeComponent();
             ReadRegistry();
             TmpPath = Path.GetTempFileName();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
             Application.DoEvents();
+            if (args.Length == 1)
+                OpenFile(args[0]);
         }
 
         private void ReadRegistry()
@@ -117,6 +119,7 @@ namespace Covariant_Script
         private void OpenFile(string path)
         {
             textBox1.Text = File.ReadAllText(path);
+            textBox1.Select(0, 0);
             FilePath = path;
             FileChanged = false;
             toolStripStatusLabel2.Text = "";
