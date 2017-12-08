@@ -393,6 +393,23 @@ namespace Covariant_Script
             Process.Start(Configs.Urls.WebSite);
         }
 
+        private void toolStripMenuItem30_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (openFileDialog2.ShowDialog() == DialogResult.OK)
+                {
+                    File.Copy(openFileDialog2.FileName, Settings.import_path + "/" + Path.GetFileName(openFileDialog2.FileName), true);
+                    MessageBox.Show("安装完毕", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("安装失败", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == '\t')
