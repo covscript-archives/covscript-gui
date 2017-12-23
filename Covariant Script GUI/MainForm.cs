@@ -21,15 +21,33 @@ namespace Covariant_Script
         {
             InitializeComponent();
             ReadRegistry();
+            if (args.Length == 1)
+            {
+                if (Path.GetExtension(args[0]) == ".cse")
+                {
+                    if (MessageBox.Show("是否要安装扩展?\n文件路径:" + args[0], "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        File.Copy(args[0], Settings.import_path + "/" + Path.GetFileName(args[0]), true);
+                        MessageBox.Show("安装完毕", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    Environment.Exit(0);
+                }
+                else
+                    OpenFile(args[0]);
+            }
             TmpPath = Path.GetTempFileName();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
             Application.DoEvents();
-            if (args.Length == 1)
-                OpenFile(args[0]);
         }
 
         private void ReadRegistry()
         {
+            Registry.ClassesRoot.CreateSubKey(".csc").SetValue("", "CovScriptGUI.Code", RegistryValueKind.String);
+            Registry.ClassesRoot.CreateSubKey("CovScriptGUI.Code").CreateSubKey("Shell\\Open\\Command").SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"", RegistryValueKind.ExpandString);
+            Registry.ClassesRoot.CreateSubKey(".csp").SetValue("", "CovScriptGUI.Package", RegistryValueKind.String);
+            Registry.ClassesRoot.CreateSubKey("CovScriptGUI.Package").CreateSubKey("Shell\\Open\\Command").SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"", RegistryValueKind.ExpandString);
+            Registry.ClassesRoot.CreateSubKey(".cse").SetValue("", "CovScriptGUI.Extension", RegistryValueKind.String);
+            Registry.ClassesRoot.CreateSubKey("CovScriptGUI.Extension").CreateSubKey("Shell\\Open\\Command").SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"", RegistryValueKind.ExpandString);
             RegistryKey key = Registry.CurrentUser.CreateSubKey(Configs.Names.CsRegistry);
             Object bin_path = key.GetValue(Configs.RegistryKey.BinPath);
             Object ipt_path = key.GetValue(Configs.RegistryKey.ImportPath);
