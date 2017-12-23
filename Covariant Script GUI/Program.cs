@@ -28,7 +28,7 @@ namespace Covariant_Script
                 };
                 foreach (string arg in args)
                 {
-                    startInfo.Arguments += arg + " ";
+                    startInfo.Arguments += "\"" + arg + "\" ";
                 }
                 System.Diagnostics.Process.Start(startInfo);
             }
