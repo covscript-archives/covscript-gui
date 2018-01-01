@@ -42,12 +42,6 @@ namespace Covariant_Script
 
         private void ReadRegistry()
         {
-            Registry.ClassesRoot.CreateSubKey(".csc").SetValue("", "CovScriptGUI.Code", RegistryValueKind.String);
-            Registry.ClassesRoot.CreateSubKey("CovScriptGUI.Code").CreateSubKey("Shell\\Open\\Command").SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"", RegistryValueKind.ExpandString);
-            Registry.ClassesRoot.CreateSubKey(".csp").SetValue("", "CovScriptGUI.Package", RegistryValueKind.String);
-            Registry.ClassesRoot.CreateSubKey("CovScriptGUI.Package").CreateSubKey("Shell\\Open\\Command").SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"", RegistryValueKind.ExpandString);
-            Registry.ClassesRoot.CreateSubKey(".cse").SetValue("", "CovScriptGUI.Extension", RegistryValueKind.String);
-            Registry.ClassesRoot.CreateSubKey("CovScriptGUI.Extension").CreateSubKey("Shell\\Open\\Command").SetValue("", "\"" + Application.ExecutablePath + "\" \"%1\"", RegistryValueKind.ExpandString);
             RegistryKey key = Registry.CurrentUser.CreateSubKey(Configs.Names.CsRegistry);
             Object bin_path = key.GetValue(Configs.RegistryKey.BinPath);
             Object ipt_path = key.GetValue(Configs.RegistryKey.ImportPath);
@@ -403,6 +397,7 @@ namespace Covariant_Script
             new Settings(settings).ShowDialog();
             SaveRegistry();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
+            textBox1.Select(0, 0);
             Application.DoEvents();
         }
 
@@ -426,6 +421,11 @@ namespace Covariant_Script
                 MessageBox.Show("安装失败", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void toolStripMenuItem31_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = textBox1.Text.Replace("\t", new string(' ', settings.tab_width));
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)

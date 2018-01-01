@@ -13,25 +13,7 @@ namespace Covariant_Script
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            System.Security.Principal.WindowsIdentity identity = System.Security.Principal.WindowsIdentity.GetCurrent();
-            System.Security.Principal.WindowsPrincipal principal = new System.Security.Principal.WindowsPrincipal(identity);
-            if (principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator))
-                Application.Run(new MainForm(args));
-            else
-            {
-                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
-                {
-                    UseShellExecute = true,
-                    WorkingDirectory = Environment.CurrentDirectory,
-                    FileName = Application.ExecutablePath,
-                    Verb = "runas"
-                };
-                foreach (string arg in args)
-                {
-                    startInfo.Arguments += "\"" + arg + "\" ";
-                }
-                System.Diagnostics.Process.Start(startInfo);
-            }
+            Application.Run(new MainForm(args));
         }
     }
 }
