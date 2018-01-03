@@ -48,9 +48,5 @@ namespace Covariant_Script
             public static string FontSize = "FontSize";
             public static string TabWidth = "TabWidth";
         }
-        class Paths
-        {
-            public static string WorkPath = "C:\\";
-        }
     }
 }

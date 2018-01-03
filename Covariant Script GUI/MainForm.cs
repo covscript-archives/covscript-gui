@@ -117,7 +117,7 @@ namespace Covariant_Script
                 CsProcess.StartInfo.FileName = bin_name;
                 CsProcess.StartInfo.Arguments = args;
                 CsProcess.StartInfo.UseShellExecute = true;
-                CsProcess.StartInfo.WorkingDirectory = Configs.Paths.WorkPath;
+                CsProcess.StartInfo.WorkingDirectory = Settings.program_path;
                 CsProcess.Start();
             }
             catch (System.ComponentModel.Win32Exception)
