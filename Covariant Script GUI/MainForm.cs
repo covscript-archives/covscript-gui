@@ -82,7 +82,7 @@ namespace Covariant_Script
             return args;
         }
 
-        private string ComposeArguments(string file_path,bool compile_only,string program_args)
+        private string ComposeArguments(string file_path, bool compile_only, string program_args)
         {
             string args = ComposeDefaultArguments();
             if (compile_only)
@@ -104,9 +104,9 @@ namespace Covariant_Script
             }
         }
 
-        private void StartProcess(string bin_name,string args)
+        private void StartProcess(string bin_name, string args)
         {
-            if(CsProcess!=null&&!CsProcess.HasExited)
+            if (CsProcess != null && !CsProcess.HasExited)
             {
                 MessageBox.Show("不能同时运行两个进程", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -166,16 +166,16 @@ namespace Covariant_Script
 
         private void Run()
         {
-            File.WriteAllText(TmpPath,textBox1.Text);
-            File.Delete(Settings.log_path+Configs.Names.CsLog);
-            StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath,false,""));
+            File.WriteAllText(TmpPath, textBox1.Text);
+            File.Delete(Settings.log_path + Configs.Names.CsLog);
+            StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath, false, ""));
         }
 
         public void RunWithArgs(bool compile_only, string args)
         {
             File.WriteAllText(TmpPath, textBox1.Text);
             File.Delete(Settings.log_path + Configs.Names.CsLog);
-            StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath,compile_only,args));
+            StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath, compile_only, args));
         }
 
         private void RunRepl()
@@ -198,13 +198,13 @@ namespace Covariant_Script
         private void toolStripMenuItem6_Click(object sender, System.EventArgs e)
         {
             CheckUnsave();
-            if (openFileDialog1.ShowDialog()==DialogResult.OK)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 OpenFile(openFileDialog1.FileName);
         }
 
         private void toolStripMenuItem7_Click(object sender, System.EventArgs e)
         {
-            if(FilePath=="")
+            if (FilePath == "")
             {
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                     SaveFile(saveFileDialog1.FileName);
@@ -235,7 +235,7 @@ namespace Covariant_Script
             {
                 new Error(File.ReadAllText(Settings.log_path + Configs.Names.CsLog)).Show();
             }
-            catch(FileNotFoundException)
+            catch (FileNotFoundException)
             {
                 MessageBox.Show("无错误信息", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -280,7 +280,7 @@ namespace Covariant_Script
         {
             DownloadCompoents();
         }
-        
+
         private void toolStripMenuItem20_Click(object sender, System.EventArgs e)
         {
             textBox1.Undo();
@@ -318,7 +318,7 @@ namespace Covariant_Script
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            switch(e.KeyCode)
+            switch (e.KeyCode)
             {
                 case Keys.N:
                     if (e.Modifiers == Keys.Control)
@@ -339,7 +339,8 @@ namespace Covariant_Script
                     {
                         toolStripMenuItem7_Click(this, EventArgs.Empty);
                         e.Handled = true;
-                    }else if ((int)e.Modifiers == ((int)Keys.Control + (int)Keys.Shift))
+                    }
+                    else if ((int)e.Modifiers == ((int)Keys.Control + (int)Keys.Shift))
                     {
                         toolStripMenuItem8_Click(this, EventArgs.Empty);
                         e.Handled = true;
@@ -426,6 +427,34 @@ namespace Covariant_Script
         private void toolStripMenuItem31_Click(object sender, EventArgs e)
         {
             textBox1.Text = textBox1.Text.Replace("\t", new string(' ', settings.tab_width));
+        }
+
+        private void toolStripMenuItem32_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = Settings.program_path + Configs.Names.CsReplBin,
+                Arguments = "--silent",
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+            try
+            {
+                Process p = Process.Start(psi);
+                p.StandardInput.WriteLine("runtime.info()");
+                p.StandardInput.WriteLine("system.exit(0)");
+                string info = p.StandardOutput.ReadToEnd();
+                info = info.TrimStart('>');
+                info = info.TrimEnd('>');
+                MessageBox.Show(info, "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                    DownloadCompoents();
+            }
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)

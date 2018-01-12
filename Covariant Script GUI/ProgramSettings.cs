@@ -16,9 +16,9 @@ namespace Covariant_Script
         public void InitDefault()
         {
             string work_path = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\CovScript";
-            import_path = work_path + "\\Imports";
-            program_path = work_path + "\\Bin";
-            log_path = work_path + "\\Logs";
+            import_path = work_path + "\\imports";
+            program_path = work_path + "\\bin";
+            log_path = work_path + "\\logs";
             font_size = 12;
             tab_width = 4;
             Directory.CreateDirectory(import_path);
