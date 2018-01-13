@@ -56,7 +56,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(363, 52);
             this.label2.TabIndex = 2;
-            this.label2.Text = "版权所有 © 2017 Michael Lee(李登淳)。\r\n该程序自带绝对保证; 详情请参阅<http://www.gnu.org/licenses/>。\r\n这" +
+            this.label2.Text = "版权所有 © 2018 Michael Lee(李登淳)。\r\n该程序自带绝对保证; 详情请参阅<http://www.gnu.org/licenses/>。\r\n这" +
     "是免费软件，欢迎您在特定条件下重新分发。\r\n请访问<http://covscript.org/>了解更多信息。";
             // 
             // label1
