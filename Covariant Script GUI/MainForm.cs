@@ -445,10 +445,7 @@ namespace Covariant_Script
                 Process p = Process.Start(psi);
                 p.StandardInput.WriteLine("runtime.info()");
                 p.StandardInput.WriteLine("system.exit(0)");
-                string info = p.StandardOutput.ReadToEnd();
-                info = info.TrimStart('>');
-                info = info.TrimEnd('>');
-                MessageBox.Show(info, "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(p.StandardOutput.ReadToEnd(), "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (System.ComponentModel.Win32Exception)
             {
