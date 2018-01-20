@@ -20,6 +20,7 @@ namespace Covariant_Script
         public MainForm(string[] args)
         {
             InitializeComponent();
+            settings.InitDefault();
             ReadRegistry();
             if (args.Length == 1)
             {
@@ -117,7 +118,7 @@ namespace Covariant_Script
                 CsProcess.StartInfo.FileName = bin_name;
                 CsProcess.StartInfo.Arguments = args;
                 CsProcess.StartInfo.UseShellExecute = true;
-                CsProcess.StartInfo.WorkingDirectory = Settings.program_path;
+                CsProcess.StartInfo.WorkingDirectory = Settings.work_path;
                 CsProcess.Start();
             }
             catch (System.ComponentModel.Win32Exception)

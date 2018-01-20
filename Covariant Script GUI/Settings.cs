@@ -11,6 +11,11 @@ namespace Covariant_Script
             InitializeComponent();
             parent_settings = s;
             InitSettings(s);
+            string sdk_path = Environment.GetEnvironmentVariable("COVSCRIPT_HOME");
+            if (sdk_path == null)
+                label6.Text = "未找到SDK路径";
+            else
+                label6.Text = "SDK路径: " + sdk_path;
         }
 
         private void InitSettings(ProgramSettings s)

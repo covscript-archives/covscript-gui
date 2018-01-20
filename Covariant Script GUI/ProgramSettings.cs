@@ -8,6 +8,7 @@ namespace Covariant_Script
     /// </summary>
     public class ProgramSettings
     {
+        public string work_path;
         public string import_path;
         public string program_path;
         public string log_path;
@@ -15,7 +16,9 @@ namespace Covariant_Script
         public int tab_width;
         public void InitDefault()
         {
-            string work_path = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\CovScript";
+            work_path = Environment.GetEnvironmentVariable("COVSCRIPT_HOME");
+            if (work_path == null)
+                work_path = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\CovScript";
             import_path = work_path + "\\imports";
             program_path = work_path + "\\bin";
             log_path = work_path + "\\logs";
