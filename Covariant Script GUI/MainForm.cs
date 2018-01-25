@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Covariant_Script
@@ -446,7 +447,45 @@ namespace Covariant_Script
                 Process p = Process.Start(psi);
                 p.StandardInput.WriteLine("runtime.info()");
                 p.StandardInput.WriteLine("system.exit(0)");
-                MessageBox.Show(p.StandardOutput.ReadToEnd(), "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                p.WaitForExit();
+                MessageBox.Show(Regex.Match(p.StandardOutput.ReadToEnd(), "Version: (.*)").Value, "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                    DownloadCompoents();
+            }
+        }
+
+        private void toolStripMenuItem33_Click(object sender, EventArgs e)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = Settings.program_path + Configs.Names.CsReplBin,
+                Arguments = "--silent",
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+            try
+            {
+                Process p = Process.Start(psi);
+                p.StandardInput.WriteLine(textBox1.SelectedText);
+                p.StandardInput.WriteLine("system.exit(0)");
+                p.WaitForExit();
+                if (p.StandardError.EndOfStream)
+                {
+                    string output = p.StandardOutput.ReadToEnd();
+                    output = output.TrimEnd('\n', '\r');
+                    if (output.Length != 0)
+                        MessageBox.Show(output, "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                        MessageBox.Show("无输出", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                    MessageBox.Show(p.StandardError.ReadToEnd(), "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (System.ComponentModel.Win32Exception)
             {
@@ -459,7 +498,7 @@ namespace Covariant_Script
         {
             if (e.KeyChar == '\t')
             {
-                SendKeys.Send(new string(' ', settings.tab_width));
+                SendKeys.SendWait(new string(' ', settings.tab_width));
                 e.Handled = true;
             }
         }
