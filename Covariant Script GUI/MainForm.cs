@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -491,6 +492,23 @@ namespace Covariant_Script
             {
                 if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                     DownloadCompoents();
+            }
+        }
+
+        private void toolStripMenuItem34_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string result = Regex.Match(File.ReadAllText(Settings.log_path + Configs.Names.CsLog), "File \\\"(.*)\\\", line ([0-9]+)").Groups[2].Value;
+                if (result != null)
+                {
+                    textBox1.Select(0, 0);
+                    SendKeys.SendWait(new string((char)Keys.Down, int.Parse(result) - 1));
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("无错误信息", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
