@@ -134,8 +134,7 @@ namespace Covariant_Script
 
         private void OpenFile(string path)
         {
-            textBox1.Text = File.ReadAllText(path).Replace("\r\n", "\n");
-            textBox1.Text = textBox1.Text.Replace("\n", "\r\n");
+            textBox1.Text = File.ReadAllText(path);
             textBox1.Select(0, 0);
             FilePath = path;
             FileChanged = false;
