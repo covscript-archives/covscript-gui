@@ -14,6 +14,7 @@ namespace Covariant_Script
         public string log_path;
         public int font_size;
         public int tab_width;
+        public int time_over;
         public void InitDefault()
         {
             work_path = Environment.GetEnvironmentVariable("COVSCRIPT_HOME");
@@ -24,6 +25,7 @@ namespace Covariant_Script
             log_path = work_path + "\\logs";
             font_size = 12;
             tab_width = 4;
+            time_over = 500;
             Directory.CreateDirectory(import_path);
             Directory.CreateDirectory(program_path);
             Directory.CreateDirectory(log_path);
@@ -50,6 +52,7 @@ namespace Covariant_Script
             public static string LogPath = "LogPath";
             public static string FontSize = "FontSize";
             public static string TabWidth = "TabWidth";
+            public static string TimeOver = "TimeOver";
         }
     }
 }

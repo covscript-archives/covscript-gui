@@ -52,7 +52,8 @@ namespace Covariant_Script
             Object log_path = key.GetValue(Configs.RegistryKey.LogPath);
             Object font_size = key.GetValue(Configs.RegistryKey.FontSize);
             Object tab_width = key.GetValue(Configs.RegistryKey.TabWidth);
-            if (bin_path == null || ipt_path == null || log_path == null || font_size == null || tab_width == null)
+            Object time_over = key.GetValue(Configs.RegistryKey.TimeOver);
+            if (bin_path == null || ipt_path == null || log_path == null || font_size == null || tab_width == null || time_over == null)
             {
                 key.Close();
                 settings.InitDefault();
@@ -65,6 +66,7 @@ namespace Covariant_Script
                 settings.log_path = log_path.ToString();
                 settings.font_size = int.Parse(font_size.ToString());
                 settings.tab_width = int.Parse(tab_width.ToString());
+                settings.time_over = int.Parse(time_over.ToString());
                 key.Close();
             }
         }
@@ -77,6 +79,7 @@ namespace Covariant_Script
             key.SetValue(Configs.RegistryKey.LogPath, settings.log_path);
             key.SetValue(Configs.RegistryKey.FontSize, settings.font_size);
             key.SetValue(Configs.RegistryKey.TabWidth, settings.tab_width);
+            key.SetValue(Configs.RegistryKey.TimeOver, settings.time_over);
         }
 
         private string ComposeDefaultArguments()
@@ -476,7 +479,15 @@ namespace Covariant_Script
                 Process p = Process.Start(psi);
                 p.StandardInput.WriteLine(textBox1.SelectedText);
                 p.StandardInput.WriteLine("system.exit(0)");
-                p.WaitForExit();
+                while (!p.HasExited)
+                {
+                    p.WaitForExit(Settings.time_over);
+                    if (!p.HasExited)
+                    {
+                        if (MessageBox.Show("求值超时，是否等待？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+                            p.Kill();
+                    }
+                }
                 if (p.StandardError.EndOfStream)
                 {
                     string output = p.StandardOutput.ReadToEnd();
