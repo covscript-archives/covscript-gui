@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -38,6 +37,8 @@ namespace Covariant_Script
                 else
                     OpenFile(args[0]);
             }
+            if (File.Exists(Settings.log_path + Configs.Names.CsLog))
+                File.Delete(Settings.log_path + Configs.Names.CsLog);
             TmpPath = Path.GetTempFileName();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
             Application.DoEvents();
@@ -133,7 +134,8 @@ namespace Covariant_Script
 
         private void OpenFile(string path)
         {
-            textBox1.Text = File.ReadAllText(path);
+            textBox1.Text = File.ReadAllText(path).Replace("\r\n", "\n");
+            textBox1.Text = textBox1.Text.Replace("\n", "\r\n");
             textBox1.Select(0, 0);
             FilePath = path;
             FileChanged = false;
@@ -500,16 +502,27 @@ namespace Covariant_Script
             try
             {
                 string result = Regex.Match(File.ReadAllText(Settings.log_path + Configs.Names.CsLog), "File \\\"(.*)\\\", line ([0-9]+)").Groups[2].Value;
-                if (result != null)
+                if (result != null && result.Length != 0)
                 {
-                    textBox1.Select(0, 0);
-                    SendKeys.SendWait(new string((char)Keys.Down, int.Parse(result) - 1));
+                    int line = int.Parse(result) - 1;
+                    int pos = 0;
+                    for (int i = 0; i < line; ++i)
+                        pos += textBox1.Lines[i].Length + 2;
+                    textBox1.Select(pos, textBox1.Lines[line].Length);
+                    textBox1.ScrollToCaret();
                 }
             }
             catch (FileNotFoundException)
             {
                 MessageBox.Show("无错误信息", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void toolStripMenuItem35_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = textBox1.Text.Replace("\r\n", "\n");
+            textBox1.Text = textBox1.Text.Replace("\n", "\r\n");
+            textBox1.Select(0, 0);
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
