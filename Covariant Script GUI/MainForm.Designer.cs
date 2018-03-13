@@ -48,6 +48,7 @@
             this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem31 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem35 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem17 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem18 = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,7 +85,7 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.process1 = new System.Diagnostics.Process();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripMenuItem35 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem36 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -253,6 +254,13 @@
             this.toolStripMenuItem31.Text = "切换至软缩进";
             this.toolStripMenuItem31.Click += new System.EventHandler(this.toolStripMenuItem31_Click);
             // 
+            // toolStripMenuItem35
+            // 
+            this.toolStripMenuItem35.Name = "toolStripMenuItem35";
+            this.toolStripMenuItem35.Size = new System.Drawing.Size(153, 22);
+            this.toolStripMenuItem35.Text = "切换至CRLF";
+            this.toolStripMenuItem35.Click += new System.EventHandler(this.toolStripMenuItem35_Click);
+            // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -264,6 +272,7 @@
             this.toolStripMenuItem19,
             this.toolStripMenuItem21,
             this.toolStripSeparator4,
+            this.toolStripMenuItem36,
             this.toolStripMenuItem30,
             this.toolStripMenuItem28});
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
@@ -274,59 +283,59 @@
             // 
             this.toolStripMenuItem17.Name = "toolStripMenuItem17";
             this.toolStripMenuItem17.ShortcutKeyDisplayString = "(Ctrl+R)";
-            this.toolStripMenuItem17.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItem17.Size = new System.Drawing.Size(193, 22);
             this.toolStripMenuItem17.Text = "运行";
             this.toolStripMenuItem17.Click += new System.EventHandler(this.toolStripMenuItem17_Click);
             // 
             // toolStripMenuItem18
             // 
             this.toolStripMenuItem18.Name = "toolStripMenuItem18";
-            this.toolStripMenuItem18.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItem18.Size = new System.Drawing.Size(193, 22);
             this.toolStripMenuItem18.Text = "运行选项...";
             this.toolStripMenuItem18.Click += new System.EventHandler(this.toolStripMenuItem18_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(190, 6);
             // 
             // toolStripMenuItem11
             // 
             this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(193, 22);
             this.toolStripMenuItem11.Text = "查看错误信息";
             this.toolStripMenuItem11.Click += new System.EventHandler(this.toolStripMenuItem11_Click);
             // 
             // toolStripMenuItem19
             // 
             this.toolStripMenuItem19.Name = "toolStripMenuItem19";
-            this.toolStripMenuItem19.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItem19.Size = new System.Drawing.Size(193, 22);
             this.toolStripMenuItem19.Text = "运行安装程序";
             this.toolStripMenuItem19.Click += new System.EventHandler(this.toolStripMenuItem19_Click);
             // 
             // toolStripMenuItem21
             // 
             this.toolStripMenuItem21.Name = "toolStripMenuItem21";
-            this.toolStripMenuItem21.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItem21.Size = new System.Drawing.Size(193, 22);
             this.toolStripMenuItem21.Text = "交互式解释器(REPL)";
             this.toolStripMenuItem21.Click += new System.EventHandler(this.toolStripMenuItem21_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(190, 6);
             // 
             // toolStripMenuItem30
             // 
             this.toolStripMenuItem30.Name = "toolStripMenuItem30";
-            this.toolStripMenuItem30.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItem30.Size = new System.Drawing.Size(193, 22);
             this.toolStripMenuItem30.Text = "安装扩展...";
             this.toolStripMenuItem30.Click += new System.EventHandler(this.toolStripMenuItem30_Click);
             // 
             // toolStripMenuItem28
             // 
             this.toolStripMenuItem28.Name = "toolStripMenuItem28";
-            this.toolStripMenuItem28.Size = new System.Drawing.Size(184, 22);
+            this.toolStripMenuItem28.Size = new System.Drawing.Size(193, 22);
             this.toolStripMenuItem28.Text = "选项...";
             this.toolStripMenuItem28.Click += new System.EventHandler(this.toolStripMenuItem28_Click);
             // 
@@ -531,12 +540,12 @@
             this.openFileDialog2.DefaultExt = "cse";
             this.openFileDialog2.Filter = "CovScript扩展(*.cse)|*.cse|CovScript包文件(*.csp)|*.csp";
             // 
-            // toolStripMenuItem35
+            // toolStripMenuItem36
             // 
-            this.toolStripMenuItem35.Name = "toolStripMenuItem35";
-            this.toolStripMenuItem35.Size = new System.Drawing.Size(153, 22);
-            this.toolStripMenuItem35.Text = "切换至CRLF";
-            this.toolStripMenuItem35.Click += new System.EventHandler(this.toolStripMenuItem35_Click);
+            this.toolStripMenuItem36.Name = "toolStripMenuItem36";
+            this.toolStripMenuItem36.Size = new System.Drawing.Size(193, 22);
+            this.toolStripMenuItem36.Text = "输出独立可执行文件...";
+            this.toolStripMenuItem36.Click += new System.EventHandler(this.toolStripMenuItem36_Click);
             // 
             // MainForm
             // 
@@ -622,6 +631,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem34;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem35;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem36;
     }
 }
 

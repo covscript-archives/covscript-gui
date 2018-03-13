@@ -543,5 +543,10 @@ namespace Covariant_Script
                 e.Handled = true;
             }
         }
+
+        private void toolStripMenuItem36_Click(object sender, EventArgs e)
+        {
+            (new Pack(settings, textBox1.Text)).Show();
+        }
     }
 }
