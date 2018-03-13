@@ -546,7 +546,7 @@ namespace Covariant_Script
 
         private void toolStripMenuItem36_Click(object sender, EventArgs e)
         {
-            (new Pack(settings, textBox1.Text)).Show();
+            new Pack(settings, textBox1.Text).ShowDialog();
         }
     }
 }
