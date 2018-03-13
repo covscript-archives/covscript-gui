@@ -65,6 +65,7 @@ namespace Covariant_Script
                 if (File.Exists(saveFileDialog1.FileName))
                     File.Delete(saveFileDialog1.FileName);
                 File.Move(tmp_path + "\\out.exe", saveFileDialog1.FileName);
+                MessageBox.Show("输出成功: " + saveFileDialog1.FileName, "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
