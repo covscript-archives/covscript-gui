@@ -18,23 +18,30 @@ namespace Covariant_Script
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Text = "请稍候....";
+            textBox1.Enabled = false;
+            textBox2.Enabled = false;
             string tmp_path = Path.GetTempPath() + "\\" + Path.GetRandomFileName();
             Directory.CreateDirectory(tmp_path);
             File.WriteAllText(tmp_path + "\\program.csc", code);
             File.Copy(settings.program_path + "\\cs.exe", tmp_path + "\\cs.exe");
-            string path = Application.StartupPath;
             string opt_files = "";
-            foreach (string name in textBox2.Text.Split(';'))
-                opt_files += "\"" + name + "\" ";
-            ProcessStartInfo info0 = new ProcessStartInfo(path + "\\7zr.exe")
+            if (textBox2.Text.Length > 0)
             {
-                RedirectStandardOutput = true,
+                foreach (string name in textBox2.Text.Split(';'))
+                    if (File.Exists(name))
+                        opt_files += "\"" + name + "\" ";
+            }
+            ProcessStartInfo info0 = new ProcessStartInfo(settings.program_path + "\\7zr.exe")
+            {
                 UseShellExecute = false,
                 CreateNoWindow = true,
-                Arguments = "a \"" + tmp_path + "\\out.7z\" \"" + settings.import_path + "\" \"" + tmp_path + "\\*\" " + opt_files + "-r -mx -mf=BCJ2"
+                WorkingDirectory = tmp_path,
+                Arguments = "a out.7z \"" + settings.import_path + "\" * " + opt_files + "-r -mx -mf=BCJ2"
             };
             Process proc0 = Process.Start(info0);
             proc0.WaitForExit();
+            File.Copy(settings.program_path + "\\7zS.sfx", tmp_path + "\\7zS.sfx");
             StreamWriter file = File.CreateText(tmp_path + "\\config.txt");
             file.WriteLine(";!@Install@!UTF-8!");
             file.WriteLine("ExecuteFile=\"cs.exe\"");
@@ -45,19 +52,20 @@ namespace Covariant_Script
             {
                 RedirectStandardInput = true,
                 UseShellExecute = false,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                WorkingDirectory = tmp_path
             };
             Process proc1 = Process.Start(info1);
-            proc1.StandardInput.WriteLine("copy /b 7zS.sfx + \"" + tmp_path + "\\config.txt\" + \"" + tmp_path + "\\out.7z\" \"" + tmp_path + "\\out.exe");
+            proc1.StandardInput.WriteLine("copy /b \"" + settings.program_path + "\\7zS.sfx\" + config.txt + out.7z out.exe");
             proc1.StandardInput.WriteLine("exit");
             proc1.WaitForExit();
+            Close();
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 if (File.Exists(saveFileDialog1.FileName))
                     File.Delete(saveFileDialog1.FileName);
                 File.Move(tmp_path + "\\out.exe", saveFileDialog1.FileName);
             }
-            Close();
         }
     }
 }
