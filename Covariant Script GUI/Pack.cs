@@ -16,6 +16,19 @@ namespace Covariant_Script
             code = text;
         }
 
+        public static void merge_files(string dest, string[] source)
+        {
+            FileStream stream = new FileStream(dest, FileMode.OpenOrCreate);
+            byte[] buffer = new byte[1024];
+            foreach (string src in source)
+            {
+                FileStream file = new FileStream(src, FileMode.Open);
+                int count = 0;
+                while ((count = file.Read(buffer, 0, buffer.Length)) > 0)
+                    stream.Write(buffer, 0, count);
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             Text = "请稍候....";
@@ -32,15 +45,14 @@ namespace Covariant_Script
                     if (File.Exists(name))
                         opt_files += "\"" + name + "\" ";
             }
-            ProcessStartInfo info0 = new ProcessStartInfo(settings.program_path + "\\7zr.exe")
+            ProcessStartInfo info = new ProcessStartInfo(settings.program_path + "\\7zr.exe")
             {
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 WorkingDirectory = tmp_path,
                 Arguments = "a out.7z \"" + settings.import_path + "\" * " + opt_files + "-r -mx -mf=BCJ2"
             };
-            Process proc0 = Process.Start(info0);
-            proc0.WaitForExit();
+            Process.Start(info).WaitForExit();
             File.Copy(settings.program_path + "\\7zS.sfx", tmp_path + "\\7zS.sfx");
             StreamWriter file = File.CreateText(tmp_path + "\\config.txt");
             file.WriteLine(";!@Install@!UTF-8!");
@@ -48,25 +60,15 @@ namespace Covariant_Script
             file.WriteLine("ExecuteParameters=\"--import-path .\\imports .\\program.csc " + textBox1.Text + "\"");
             file.WriteLine(";!@InstallEnd@!");
             file.Close();
-            ProcessStartInfo info1 = new ProcessStartInfo("cmd.exe")
-            {
-                RedirectStandardInput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = tmp_path
-            };
-            Process proc1 = Process.Start(info1);
-            proc1.StandardInput.WriteLine("copy /b \"" + settings.program_path + "\\7zS.sfx\" + config.txt + out.7z out.exe");
-            proc1.StandardInput.WriteLine("exit");
-            proc1.WaitForExit();
-            Close();
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 if (File.Exists(saveFileDialog1.FileName))
                     File.Delete(saveFileDialog1.FileName);
-                File.Move(tmp_path + "\\out.exe", saveFileDialog1.FileName);
+                string[] vs = { settings.program_path + "\\7zS.sfx", tmp_path + "\\config.txt", tmp_path + "\\out.7z" };
+                merge_files(saveFileDialog1.FileName, vs);
                 MessageBox.Show("输出成功: " + saveFileDialog1.FileName, "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+            Close();
         }
     }
 }
