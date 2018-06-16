@@ -43,7 +43,7 @@
             this.pictureBox1.Image = global::Covariant_Script.Properties.Resources.covariant_script_wide;
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(400, 160);
+            this.pictureBox1.Size = new System.Drawing.Size(430, 160);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -54,10 +54,9 @@
             this.label2.Font = new System.Drawing.Font("等线", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(10, 200);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(363, 52);
+            this.label2.Size = new System.Drawing.Size(434, 143);
             this.label2.TabIndex = 2;
-            this.label2.Text = "版权所有 © 2018 Michael Lee(李登淳)。\r\n该程序自带绝对保证; 详情请参阅<http://www.gnu.org/licenses/>。\r\n这" +
-    "是免费软件，欢迎您在特定条件下重新分发。\r\n请访问<http://covscript.org/>了解更多信息。";
+            this.label2.Text = resources.GetString("label2.Text");
             // 
             // label1
             // 
@@ -73,7 +72,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(424, 271);
+            this.ClientSize = new System.Drawing.Size(454, 361);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);

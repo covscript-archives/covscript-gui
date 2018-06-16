@@ -26,7 +26,9 @@ namespace Covariant_Script
                 int count = 0;
                 while ((count = file.Read(buffer, 0, buffer.Length)) > 0)
                     stream.Write(buffer, 0, count);
+                file.Close();
             }
+            stream.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
