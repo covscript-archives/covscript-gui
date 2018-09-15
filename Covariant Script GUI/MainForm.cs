@@ -185,6 +185,37 @@ namespace Covariant_Script
             StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath, compile_only, args));
         }
 
+        public void DumpAST()
+        {
+            File.WriteAllText(TmpPath, textBox1.Text);
+            File.Delete(Settings.log_path + Configs.Names.CsLog);
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = Settings.program_path + Configs.Names.CsBin,
+                Arguments = "--dump-ast " + ComposeArguments(TmpPath, true, "").Remove(0, DefaultArgs.Length),
+                CreateNoWindow = true,
+                UseShellExecute = false
+            };
+            int return_val = 0;
+            try
+            {
+                Process p = Process.Start(psi);
+                p.WaitForExit();
+                return_val = p.ExitCode;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                if (MessageBox.Show("缺少必要组件，是否下载？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                    DownloadCompoents();
+                return;
+            }
+            string content = File.ReadAllText(Settings.log_path + Configs.Names.CsLog);
+            if (return_val != 0)
+                MessageBox.Show("编译错误:\n" + content, "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else if (saveFileDialog2.ShowDialog() == DialogResult.OK)
+                File.WriteAllText(saveFileDialog2.FileName, content);
+        }
+
         private void RunRepl()
         {
             File.WriteAllText(TmpPath, textBox1.Text);
