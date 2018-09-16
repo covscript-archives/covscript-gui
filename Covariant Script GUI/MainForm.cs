@@ -41,6 +41,7 @@ namespace Covariant_Script
                 File.Delete(Settings.log_path + Configs.Names.CsLog);
             TmpPath = Path.GetTempFileName();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
+            InitText();
             Application.DoEvents();
         }
 
@@ -80,6 +81,16 @@ namespace Covariant_Script
             key.SetValue(Configs.RegistryKey.FontSize, settings.font_size);
             key.SetValue(Configs.RegistryKey.TabWidth, settings.tab_width);
             key.SetValue(Configs.RegistryKey.TimeOver, settings.time_over);
+        }
+
+        private void InitText()
+        {
+            textBox1.Text = "#!/usr/bin/env cs\r\n# Created by CovScript GUI v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + "\r\n# Date: " + System.DateTime.Today.ToShortDateString() + "\r\n# For more information, please visit http://covscript.org/ \r\n";
+            textBox1.Select(textBox1.Text.Length, 0);
+            FilePath = "";
+            FileChanged = false;
+            toolStripStatusLabel2.Text = "";
+            toolStripStatusLabel1.Text = "新文件";
         }
 
         private string ComposeDefaultArguments()
@@ -226,11 +237,7 @@ namespace Covariant_Script
         private void toolStripMenuItem5_Click(object sender, System.EventArgs e)
         {
             CheckUnsave();
-            textBox1.Clear();
-            FilePath = "";
-            FileChanged = false;
-            toolStripStatusLabel2.Text = "";
-            toolStripStatusLabel1.Text = "新文件";
+            InitText();
         }
 
         private void toolStripMenuItem6_Click(object sender, System.EventArgs e)
