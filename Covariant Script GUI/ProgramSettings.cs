@@ -36,6 +36,7 @@ namespace Covariant_Script
         class Urls
         {
             public static string WebSite = "http://covscript.org/";
+            public static string OnlineDoc = "http://covscript.org/docs/";
         }
         class Names
         {

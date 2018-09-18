@@ -87,6 +87,7 @@
             this.process1 = new System.Diagnostics.Process();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripMenuItem37 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -355,7 +356,8 @@
             this.toolStripMenuItem16,
             this.toolStripMenuItem32,
             this.toolStripSeparator8,
-            this.toolStripMenuItem29});
+            this.toolStripMenuItem29,
+            this.toolStripMenuItem37});
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(51, 24);
             this.toolStripMenuItem4.Text = "帮助";
@@ -502,7 +504,7 @@
             this.textBox1.Font = new System.Drawing.Font("等线", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox1.HideSelection = false;
             this.textBox1.Location = new System.Drawing.Point(0, 28);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.MaxLength = 1000000000;
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
@@ -558,6 +560,13 @@
             this.saveFileDialog2.FileName = "ast_dump";
             this.saveFileDialog2.Filter = "CovScript语法树文件(*.csa)|*.csa|所有文件(*.*)|*.*";
             // 
+            // toolStripMenuItem37
+            // 
+            this.toolStripMenuItem37.Name = "toolStripMenuItem37";
+            this.toolStripMenuItem37.Size = new System.Drawing.Size(260, 26);
+            this.toolStripMenuItem37.Text = "查看在线文档";
+            this.toolStripMenuItem37.Click += new System.EventHandler(this.toolStripMenuItem37_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -569,7 +578,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Covariant Script GUI";
@@ -645,6 +654,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem35;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem36;
         private System.Windows.Forms.SaveFileDialog saveFileDialog2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem37;
     }
 }
 

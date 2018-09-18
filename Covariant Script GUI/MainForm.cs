@@ -586,5 +586,10 @@ namespace Covariant_Script
         {
             new Pack(settings, textBox1.Text).ShowDialog();
         }
+
+        private void toolStripMenuItem37_Click(object sender, EventArgs e)
+        {
+            Process.Start(Configs.Urls.OnlineDoc);
+        }
     }
 }
