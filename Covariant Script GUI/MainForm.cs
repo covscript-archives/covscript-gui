@@ -37,11 +37,12 @@ namespace Covariant_Script
                 else
                     OpenFile(args[0]);
             }
+            else
+                InitText();
             if (File.Exists(Settings.log_path + Configs.Names.CsLog))
                 File.Delete(Settings.log_path + Configs.Names.CsLog);
             TmpPath = Path.GetTempFileName();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
-            InitText();
             Application.DoEvents();
         }
 
