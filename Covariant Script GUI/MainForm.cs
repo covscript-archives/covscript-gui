@@ -9,19 +9,18 @@ namespace Covariant_Script
 {
     public partial class MainForm : Form
     {
-        private ProgramSettings settings = new ProgramSettings();
         private string TmpPath;
         private string FilePath = "";
         private string DefaultArgs = "--wait-before-exit";
         private bool FileChanged = false;
         private Process CsProcess = null;
 
-        internal ProgramSettings Settings { get => settings; set => settings = value; }
+        internal ProgramSettings Settings { get; set; } = new ProgramSettings();
 
         public MainForm(string[] args)
         {
             InitializeComponent();
-            settings.InitDefault();
+            Settings.InitDefault();
             ReadRegistry();
             if (args.Length == 1)
             {
@@ -42,7 +41,7 @@ namespace Covariant_Script
             if (File.Exists(Settings.log_path + Configs.Names.CsLog))
                 File.Delete(Settings.log_path + Configs.Names.CsLog);
             TmpPath = Path.GetTempFileName();
-            textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
+            textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, Settings.font_size);
             Application.DoEvents();
         }
 
@@ -58,17 +57,17 @@ namespace Covariant_Script
             if (bin_path == null || ipt_path == null || log_path == null || font_size == null || tab_width == null || time_over == null)
             {
                 key.Close();
-                settings.InitDefault();
+                Settings.InitDefault();
                 SaveRegistry();
             }
             else
             {
-                settings.program_path = bin_path.ToString();
-                settings.import_path = ipt_path.ToString();
-                settings.log_path = log_path.ToString();
-                settings.font_size = int.Parse(font_size.ToString());
-                settings.tab_width = int.Parse(tab_width.ToString());
-                settings.time_over = int.Parse(time_over.ToString());
+                Settings.program_path = bin_path.ToString();
+                Settings.import_path = ipt_path.ToString();
+                Settings.log_path = log_path.ToString();
+                Settings.font_size = int.Parse(font_size.ToString());
+                Settings.tab_width = int.Parse(tab_width.ToString());
+                Settings.time_over = int.Parse(time_over.ToString());
                 key.Close();
             }
         }
@@ -76,12 +75,12 @@ namespace Covariant_Script
         private void SaveRegistry()
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey(Configs.Names.CsRegistry);
-            key.SetValue(Configs.RegistryKey.BinPath, settings.program_path);
-            key.SetValue(Configs.RegistryKey.ImportPath, settings.import_path);
-            key.SetValue(Configs.RegistryKey.LogPath, settings.log_path);
-            key.SetValue(Configs.RegistryKey.FontSize, settings.font_size);
-            key.SetValue(Configs.RegistryKey.TabWidth, settings.tab_width);
-            key.SetValue(Configs.RegistryKey.TimeOver, settings.time_over);
+            key.SetValue(Configs.RegistryKey.BinPath, Settings.program_path);
+            key.SetValue(Configs.RegistryKey.ImportPath, Settings.import_path);
+            key.SetValue(Configs.RegistryKey.LogPath, Settings.log_path);
+            key.SetValue(Configs.RegistryKey.FontSize, Settings.font_size);
+            key.SetValue(Configs.RegistryKey.TabWidth, Settings.tab_width);
+            key.SetValue(Configs.RegistryKey.TimeOver, Settings.time_over);
         }
 
         private void InitText()
@@ -114,7 +113,7 @@ namespace Covariant_Script
         {
             try
             {
-                Process.Start(settings.program_path + Configs.Names.CsInstBin);
+                Process.Start(Settings.program_path + Configs.Names.CsInstBin);
             }
             catch (Exception)
             {
@@ -441,9 +440,9 @@ namespace Covariant_Script
 
         private void toolStripMenuItem28_Click(object sender, EventArgs e)
         {
-            new Settings(settings).ShowDialog();
+            new Settings(Settings).ShowDialog();
             SaveRegistry();
-            textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, settings.font_size);
+            textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, Settings.font_size);
             textBox1.Select(0, 0);
             Application.DoEvents();
         }
@@ -472,7 +471,7 @@ namespace Covariant_Script
 
         private void toolStripMenuItem31_Click(object sender, EventArgs e)
         {
-            textBox1.Text = textBox1.Text.Replace("\t", new string(' ', settings.tab_width));
+            textBox1.Text = textBox1.Text.Replace("\t", new string(' ', Settings.tab_width));
         }
 
         private void toolStripMenuItem32_Click(object sender, EventArgs e)
@@ -578,14 +577,14 @@ namespace Covariant_Script
         {
             if (e.KeyChar == '\t')
             {
-                SendKeys.SendWait(new string(' ', settings.tab_width));
+                SendKeys.SendWait(new string(' ', Settings.tab_width));
                 e.Handled = true;
             }
         }
 
         private void toolStripMenuItem36_Click(object sender, EventArgs e)
         {
-            new Pack(settings, textBox1.Text).ShowDialog();
+            new Pack(Settings, textBox1.Text).ShowDialog();
         }
 
         private void toolStripMenuItem37_Click(object sender, EventArgs e)
