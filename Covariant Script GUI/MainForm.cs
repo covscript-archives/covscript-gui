@@ -165,21 +165,30 @@ namespace Covariant_Script
             toolStripStatusLabel1.Text = path;
         }
 
-        private void CheckUnsave()
+        private bool CheckUnsave()
         {
             if (FileChanged)
             {
-                if (MessageBox.Show("文件已修改，是否保存？", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                switch (MessageBox.Show("文件已修改，是否保存？", "Covariant Script GUI", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
-                    if (FilePath == "")
-                    {
-                        if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                            SaveFile(saveFileDialog1.FileName);
-                    }
-                    else
-                        SaveFile(FilePath);
+                    case DialogResult.Yes:
+                        {
+                            if (FilePath == "")
+                            {
+                                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                                    SaveFile(saveFileDialog1.FileName);
+                                else
+                                    return false;
+                            }
+                            else
+                                SaveFile(FilePath);
+                            break;
+                        }
+                    case DialogResult.Cancel:
+                        return false;
                 }
             }
+            return true;
         }
 
         private void Run()
@@ -236,14 +245,13 @@ namespace Covariant_Script
 
         private void toolStripMenuItem5_Click(object sender, System.EventArgs e)
         {
-            CheckUnsave();
-            InitText();
+            if (CheckUnsave())
+                InitText();
         }
 
         private void toolStripMenuItem6_Click(object sender, System.EventArgs e)
         {
-            CheckUnsave();
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (CheckUnsave() && openFileDialog1.ShowDialog() == DialogResult.OK)
                 OpenFile(openFileDialog1.FileName);
         }
 
@@ -410,7 +418,8 @@ namespace Covariant_Script
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CheckUnsave();
+            if (!CheckUnsave())
+                e.Cancel = true;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
