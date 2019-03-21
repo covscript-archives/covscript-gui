@@ -65,6 +65,7 @@
             this.toolStripMenuItem32 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem29 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem37 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem20 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -87,7 +88,7 @@
             this.process1 = new System.Diagnostics.Process();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripMenuItem37 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem38 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -270,6 +271,7 @@
             this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem17,
             this.toolStripMenuItem18,
+            this.toolStripMenuItem38,
             this.toolStripSeparator5,
             this.toolStripMenuItem11,
             this.toolStripMenuItem19,
@@ -387,6 +389,13 @@
             this.toolStripMenuItem29.Size = new System.Drawing.Size(260, 26);
             this.toolStripMenuItem29.Text = "访问CovScript主页";
             this.toolStripMenuItem29.Click += new System.EventHandler(this.toolStripMenuItem29_Click);
+            // 
+            // toolStripMenuItem37
+            // 
+            this.toolStripMenuItem37.Name = "toolStripMenuItem37";
+            this.toolStripMenuItem37.Size = new System.Drawing.Size(260, 26);
+            this.toolStripMenuItem37.Text = "查看在线文档";
+            this.toolStripMenuItem37.Click += new System.EventHandler(this.toolStripMenuItem37_Click);
             // 
             // contextMenuStrip1
             // 
@@ -560,12 +569,12 @@
             this.saveFileDialog2.FileName = "ast_dump";
             this.saveFileDialog2.Filter = "CovScript语法树文件(*.csa)|*.csa|所有文件(*.*)|*.*";
             // 
-            // toolStripMenuItem37
+            // toolStripMenuItem38
             // 
-            this.toolStripMenuItem37.Name = "toolStripMenuItem37";
-            this.toolStripMenuItem37.Size = new System.Drawing.Size(260, 26);
-            this.toolStripMenuItem37.Text = "查看在线文档";
-            this.toolStripMenuItem37.Click += new System.EventHandler(this.toolStripMenuItem37_Click);
+            this.toolStripMenuItem38.Name = "toolStripMenuItem38";
+            this.toolStripMenuItem38.Size = new System.Drawing.Size(231, 26);
+            this.toolStripMenuItem38.Text = "运行调试器";
+            this.toolStripMenuItem38.Click += new System.EventHandler(this.toolStripMenuItem38_Click);
             // 
             // MainForm
             // 
@@ -655,6 +664,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem36;
         private System.Windows.Forms.SaveFileDialog saveFileDialog2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem37;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem38;
     }
 }
 

@@ -42,6 +42,7 @@ namespace Covariant_Script
         {
             public static string CsBin = "\\cs.exe";
             public static string CsReplBin = "\\cs_repl.exe";
+            public static string CsDbgBin = "\\cs_dbg.exe";
             public static string CsInstBin = "\\cs_inst.exe";
             public static string CsLog = "\\cs_gui.log";
             public static string CsRegistry = "software\\CovScriptGUI";

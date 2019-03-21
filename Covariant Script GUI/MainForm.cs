@@ -238,9 +238,15 @@ namespace Covariant_Script
 
         private void RunRepl()
         {
-            File.WriteAllText(TmpPath, textBox1.Text);
             File.Delete(Settings.log_path + Configs.Names.CsLog);
             StartProcess(Settings.program_path + Configs.Names.CsReplBin, ComposeDefaultArguments());
+        }
+
+        private void RunDbg()
+        {
+            File.WriteAllText(TmpPath, textBox1.Text);
+            File.Delete(Settings.log_path + Configs.Names.CsLog);
+            StartProcess(Settings.program_path + Configs.Names.CsDbgBin, ComposeArguments(TmpPath, false, ""));
         }
 
         private void toolStripMenuItem5_Click(object sender, System.EventArgs e)
@@ -599,6 +605,11 @@ namespace Covariant_Script
         private void toolStripMenuItem37_Click(object sender, EventArgs e)
         {
             Process.Start(Configs.Urls.OnlineDoc);
+        }
+
+        private void toolStripMenuItem38_Click(object sender, EventArgs e)
+        {
+            RunDbg();
         }
     }
 }
