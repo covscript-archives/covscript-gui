@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -42,6 +43,7 @@ namespace Covariant_Script
                 File.Delete(Settings.log_path + Configs.Names.CsLog);
             TmpPath = Path.GetTempFileName();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, Settings.font_size);
+            toolStripStatusLabel3.Alignment = ToolStripItemAlignment.Right;
             Application.DoEvents();
         }
 
@@ -135,7 +137,10 @@ namespace Covariant_Script
                 CsProcess.StartInfo.FileName = bin_name;
                 CsProcess.StartInfo.Arguments = args;
                 CsProcess.StartInfo.UseShellExecute = true;
-                CsProcess.StartInfo.WorkingDirectory = Settings.work_path;
+                if (FilePath != "")
+                    CsProcess.StartInfo.WorkingDirectory = Path.GetDirectoryName(FilePath);
+                else
+                    CsProcess.StartInfo.WorkingDirectory = Settings.work_path;
                 CsProcess.Start();
             }
             catch (System.ComponentModel.Win32Exception)
@@ -158,7 +163,7 @@ namespace Covariant_Script
 
         private void SaveFile(string path)
         {
-            File.WriteAllText(path, textBox1.Text);
+            File.WriteAllBytes(path, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
             FilePath = path;
             FileChanged = false;
             toolStripStatusLabel2.Text = "";
@@ -193,21 +198,21 @@ namespace Covariant_Script
 
         private void Run()
         {
-            File.WriteAllText(TmpPath, textBox1.Text);
+            File.WriteAllBytes(TmpPath, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
             File.Delete(Settings.log_path + Configs.Names.CsLog);
             StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath, false, ""));
         }
 
         public void RunWithArgs(bool compile_only, string args)
         {
-            File.WriteAllText(TmpPath, textBox1.Text);
+            File.WriteAllBytes(TmpPath, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
             File.Delete(Settings.log_path + Configs.Names.CsLog);
             StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath, compile_only, args));
         }
 
         public void DumpAST()
         {
-            File.WriteAllText(TmpPath, textBox1.Text);
+            File.WriteAllBytes(TmpPath, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
             File.Delete(Settings.log_path + Configs.Names.CsLog);
             ProcessStartInfo psi = new ProcessStartInfo
             {
@@ -244,14 +249,16 @@ namespace Covariant_Script
 
         private void RunDbg()
         {
-            File.WriteAllText(TmpPath, textBox1.Text);
+            File.WriteAllBytes(TmpPath, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
             File.Delete(Settings.log_path + Configs.Names.CsLog);
             StartProcess(Settings.program_path + Configs.Names.CsDbgBin, ComposeArguments(TmpPath, false, ""));
         }
 
         private void toolStripMenuItem5_Click(object sender, System.EventArgs e)
         {
-            if (CheckUnsave())
+            if (MessageBox.Show("是否打开新窗口?", "Covariant Script GUI", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                Process.Start(Application.ExecutablePath);
+            else if (CheckUnsave())
                 InitText();
         }
 
@@ -610,6 +617,12 @@ namespace Covariant_Script
         private void toolStripMenuItem38_Click(object sender, EventArgs e)
         {
             RunDbg();
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            int selection_start = textBox1.SelectionStart;
+            toolStripStatusLabel3.Text = "行 " + (textBox1.GetLineFromCharIndex(selection_start) + 1) + ",  列" + (selection_start - textBox1.GetFirstCharIndexOfCurrentLine()) + "    空格: " + Settings.tab_width + "    字体: " + Settings.font_size + "pt";
         }
     }
 }
