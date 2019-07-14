@@ -44,6 +44,7 @@ namespace Covariant_Script
             TmpPath = Path.GetTempFileName();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, Settings.font_size);
             toolStripStatusLabel3.Alignment = ToolStripItemAlignment.Right;
+            toolStripStatusLabel4.Text = "编码(点击切换): " + (Settings.encoding ? "GBK" : "UTF-8");
             Application.DoEvents();
         }
 
@@ -56,7 +57,8 @@ namespace Covariant_Script
             Object font_size = key.GetValue(Configs.RegistryKey.FontSize);
             Object tab_width = key.GetValue(Configs.RegistryKey.TabWidth);
             Object time_over = key.GetValue(Configs.RegistryKey.TimeOver);
-            if (bin_path == null || ipt_path == null || log_path == null || font_size == null || tab_width == null || time_over == null)
+            Object encoding = key.GetValue(Configs.RegistryKey.Encoding);
+            if (bin_path == null || ipt_path == null || log_path == null || font_size == null || tab_width == null || time_over == null || encoding == null)
             {
                 key.Close();
                 Settings.InitDefault();
@@ -70,6 +72,7 @@ namespace Covariant_Script
                 Settings.font_size = int.Parse(font_size.ToString());
                 Settings.tab_width = int.Parse(tab_width.ToString());
                 Settings.time_over = int.Parse(time_over.ToString());
+                Settings.encoding = bool.Parse(encoding.ToString());
                 key.Close();
             }
         }
@@ -83,6 +86,7 @@ namespace Covariant_Script
             key.SetValue(Configs.RegistryKey.FontSize, Settings.font_size);
             key.SetValue(Configs.RegistryKey.TabWidth, Settings.tab_width);
             key.SetValue(Configs.RegistryKey.TimeOver, Settings.time_over);
+            key.SetValue(Configs.RegistryKey.Encoding, Settings.encoding);
         }
 
         private void InitText()
@@ -153,7 +157,7 @@ namespace Covariant_Script
 
         private void OpenFile(string path)
         {
-            textBox1.Text = File.ReadAllText(path);
+            textBox1.Text = Encoding.GetEncoding(Settings.encoding ? "GBK" : "UTF-8").GetString(File.ReadAllBytes(path));
             textBox1.Select(0, 0);
             FilePath = path;
             FileChanged = false;
@@ -163,7 +167,7 @@ namespace Covariant_Script
 
         private void SaveFile(string path)
         {
-            File.WriteAllBytes(path, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
+            File.WriteAllBytes(path, Encoding.GetEncoding(Settings.encoding ? "GBK" : "UTF-8").GetBytes(textBox1.Text));
             FilePath = path;
             FileChanged = false;
             toolStripStatusLabel2.Text = "";
@@ -198,21 +202,21 @@ namespace Covariant_Script
 
         private void Run()
         {
-            File.WriteAllBytes(TmpPath, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
+            File.WriteAllBytes(TmpPath, Encoding.GetEncoding(Settings.encoding ? "GBK" : "UTF-8").GetBytes(textBox1.Text));
             File.Delete(Settings.log_path + Configs.Names.CsLog);
             StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath, false, ""));
         }
 
         public void RunWithArgs(bool compile_only, string args)
         {
-            File.WriteAllBytes(TmpPath, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
+            File.WriteAllBytes(TmpPath, Encoding.GetEncoding(Settings.encoding ? "GBK" : "UTF-8").GetBytes(textBox1.Text));
             File.Delete(Settings.log_path + Configs.Names.CsLog);
             StartProcess(Settings.program_path + Configs.Names.CsBin, ComposeArguments(TmpPath, compile_only, args));
         }
 
         public void DumpAST()
         {
-            File.WriteAllBytes(TmpPath, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
+            File.WriteAllBytes(TmpPath, Encoding.GetEncoding(Settings.encoding ? "GBK" : "UTF-8").GetBytes(textBox1.Text));
             File.Delete(Settings.log_path + Configs.Names.CsLog);
             ProcessStartInfo psi = new ProcessStartInfo
             {
@@ -249,7 +253,7 @@ namespace Covariant_Script
 
         private void RunDbg()
         {
-            File.WriteAllBytes(TmpPath, Encoding.GetEncoding("GBK").GetBytes(textBox1.Text));
+            File.WriteAllBytes(TmpPath, Encoding.GetEncoding(Settings.encoding ? "GBK" : "UTF-8").GetBytes(textBox1.Text));
             File.Delete(Settings.log_path + Configs.Names.CsLog);
             StartProcess(Settings.program_path + Configs.Names.CsDbgBin, ComposeArguments(TmpPath, false, ""));
         }
@@ -462,9 +466,17 @@ namespace Covariant_Script
 
         private void toolStripMenuItem28_Click(object sender, EventArgs e)
         {
+            bool encoding = Settings.encoding;
             new Settings(Settings).ShowDialog();
             SaveRegistry();
             textBox1.Font = new System.Drawing.Font(textBox1.Font.Name, Settings.font_size);
+            if (Settings.encoding != encoding && FilePath != "")
+            {
+                if (FileChanged)
+                    MessageBox.Show("编码已更改，保存或打开新文件生效", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    OpenFile(FilePath);
+            }
             textBox1.Select(0, 0);
             Application.DoEvents();
         }
@@ -626,6 +638,22 @@ namespace Covariant_Script
                 int selection_start = textBox1.SelectionStart;
                 toolStripStatusLabel3.Text = "行 " + (textBox1.GetLineFromCharIndex(selection_start) + 1) + ",  列" + (selection_start - textBox1.GetFirstCharIndexOfCurrentLine()) + "    空格: " + Settings.tab_width + "    字体: " + Settings.font_size + "pt";
             }
+        }
+
+        private void ToolStripStatusLabel4_Click(object sender, EventArgs e)
+        {
+            Settings.encoding = !Settings.encoding;
+            SaveRegistry();
+            toolStripStatusLabel4.Text = "编码(点击切换): " + (Settings.encoding ? "GBK" : "UTF-8");
+            if (FilePath != "")
+            {
+                if (FileChanged)
+                    MessageBox.Show("编码已更改，保存或打开新文件生效", "Covariant Script GUI", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    OpenFile(FilePath);
+            }
+            textBox1.Select(0, 0);
+            Application.DoEvents();
         }
     }
 }

@@ -26,6 +26,10 @@ namespace Covariant_Script
             numericUpDown1.Value = s.font_size;
             numericUpDown2.Value = s.tab_width;
             numericUpDown3.Value = s.time_over;
+            if (s.encoding)
+                button4.Text = "GBK";
+            else
+                button4.Text = "UTF-8";
         }
 
         private void button1_Click(object sender, System.EventArgs e)
@@ -43,6 +47,7 @@ namespace Covariant_Script
             parent_settings.font_size = (int)numericUpDown1.Value;
             parent_settings.tab_width = (int)numericUpDown2.Value;
             parent_settings.time_over = (int)numericUpDown3.Value;
+            parent_settings.encoding = button4.Text == "GBK";
             Close();
         }
 
@@ -59,6 +64,14 @@ namespace Covariant_Script
                     button2_Click(this, EventArgs.Empty);
                     break;
             }
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            if (button4.Text == "GBK")
+                button4.Text = "UTF-8";
+            else
+                button4.Text = "GBK";
         }
     }
 }
