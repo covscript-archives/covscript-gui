@@ -611,7 +611,7 @@ namespace Covariant_Script
 
         private void toolStripMenuItem37_Click(object sender, EventArgs e)
         {
-            Process.Start(Configs.Urls.OnlineDoc);
+            Process.Start(Settings.work_path+"\\docs");
         }
 
         private void toolStripMenuItem38_Click(object sender, EventArgs e)
@@ -621,8 +621,11 @@ namespace Covariant_Script
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            int selection_start = textBox1.SelectionStart;
-            toolStripStatusLabel3.Text = "行 " + (textBox1.GetLineFromCharIndex(selection_start) + 1) + ",  列" + (selection_start - textBox1.GetFirstCharIndexOfCurrentLine()) + "    空格: " + Settings.tab_width + "    字体: " + Settings.font_size + "pt";
+            if (textBox1.SelectionLength == 0)
+            {
+                int selection_start = textBox1.SelectionStart;
+                toolStripStatusLabel3.Text = "行 " + (textBox1.GetLineFromCharIndex(selection_start) + 1) + ",  列" + (selection_start - textBox1.GetFirstCharIndexOfCurrentLine()) + "    空格: " + Settings.tab_width + "    字体: " + Settings.font_size + "pt";
+            }
         }
     }
 }
